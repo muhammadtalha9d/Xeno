@@ -176,19 +176,19 @@
 
 
     <!-- Hero Section -->
-    <section class="hero-bg pt-48 pb-40 px-8 overflow-hidden">
+    <section class="hero-bg pt-48 overflow-hidden relative flex flex-col min-h-screen">
         <div class="absolute inset-0 dot-grid opacity-[0.5]"></div>
         <div class="absolute inset-0 soft-glow"></div>
 
-
-        <div class="max-w-6xl mx-auto flex flex-col items-center text-center relative z-10">
+        <div class="max-w-6xl mx-auto px-8 flex flex-col items-center text-center relative z-10 flex-grow">
             <h1 class="text-4xl md:text-6xl font-semibold tracking-tight text-gray-900 mb-8 leading-[1.1] max-w-4xl">
                 Your Personal AI Assistant <br class="hidden md:block"> For All Your Files
             </h1>
             <p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-14 leading-relaxed font-normal">
                 XeNo interprets your documents, photos, and screenshots and reveals key connections and insights instantly.
             </p>
-            <div class="flex flex-col items-center gap-10 w-full">
+
+            <div class="flex flex-col items-center gap-10 w-full mb-20">
                 <div class="w-full max-w-xl p-1.5 rounded-[2rem] bg-white border border-gray-100 shadow-xl shadow-indigo-500/5 flex items-center gap-4">
                     <div class="w-12 h-12 rounded-full bg-brand/5 flex items-center justify-center text-brand">
                         <i data-lucide="search" class="w-5 h-5"></i>
@@ -199,18 +199,22 @@
                         <span class="typing-cursor"></span>
                     </div>
                 </div>
-                <div class="flex flex-col items-center gap-6">
-                    <div class="flex flex-col sm:flex-row items-center gap-4">
-                        <button class="px-10 py-4 rounded-full bg-black text-white font-bold text-sm hover:bg-brand transition-all flex items-center gap-2 shadow-lg shadow-gray-200">
-                            Download the app
-                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#d946ef] to-[#6366f1] text-white shadow-sm">
-                        <i data-lucide="lock" class="w-3.5 h-3.5"></i>
-                        <span class="text-[10px] font-black uppercase tracking-wider">100% Private - XeNo works entirely offline and never uploads your files to the cloud, <br/> ensuring your private data stays on your phone and is never shared with third parties.</span>
-                    </div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <button class="px-10 py-4 rounded-full bg-black text-white font-bold text-sm hover:bg-brand transition-all flex items-center gap-2 shadow-lg shadow-gray-200">
+                        Download the app
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
                 </div>
+            </div>
+        </div>
+
+        <div class="relative z-20 w-full bg-gradient-to-r from-[#d946ef] to-[#6366f1] py-4 px-6 shadow-sm">
+            <div class="flex items-center justify-center gap-2 text-white">
+                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                <span class="text-[10px] font-black tracking-wider ">
+                100% Private - XeNo works entirely offline and never uploads your files to the cloud, ensuring your private data stays on your phone and is never shared with third parties.
+            </span>
             </div>
         </div>
     </section>
