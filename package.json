@@ -1,0 +1,15 @@
+{
+  "name": "xeno-ai-landing",
+  "version": "1.0.0",
+  "description": "XeNo AI - Ask Your Files Anything",
+  "scripts": {
+    "serve": "http-server -p 8000 -o",
+    "start": "http-server -p 8000"
+  },
+  "keywords": ["xeno", "ai", "landing-page"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
