@@ -389,37 +389,37 @@
 
 
     <!-- Features Interactive -->
-    <section id="high-performance-features" class="py-16 lg:py-32 bg-white px-4 md:px-8 border-y border-slate-200/50 relative overflow-hidden">
+    <section id="high-performance-features" class="py-16 lg:py-32 bg-white px-4 md:px-8 border-y border-slate-200/50 relative">
         <!-- Background Gradients -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 right-0 w-[300px] lg:w-[500px] h-[300px] lg:h-[500px] bg-indigo-50/50 rounded-full blur-[80px] lg:blur-[120px] -mr-32 -mt-16"></div>
             <div class="absolute bottom-0 left-0 w-[300px] lg:w-[500px] h-[300px] lg:h-[500px] bg-purple-50/50 rounded-full blur-[80px] lg:blur-[120px] -ml-32 -mb-16"></div>
         </div>
 
-
         <div class="max-w-7xl mx-auto relative z-10">
-            <!-- Header - Matches "Tell XeNo What You Remember" Section -->
+            <!-- Header -->
             <div class="text-center mb-12 lg:mb-24">
                 <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-4">
                     Context-Aware Answers, Right From Your Files
                 </h2>
             </div>
 
+            <!-- FIXED: Use flex instead of grid for better sticky control -->
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-16">
+                <!-- Sidebar Selectors - LEFT SIDE, SCROLLABLE -->
+                <div class="w-full lg:w-[45%] space-y-3 lg:space-y-4 lg:pb-12 order-last lg:order-first" id="feature-sidebar"></div>
 
-            <div class="grid lg:grid-cols-[1.1fr_1.5fr] gap-8 lg:gap-16 items-start">
-                <!-- Visual Display Container (Sticky) -->
-                <div class="lg:sticky lg:top-24 self-start order-first lg:order-last mb-8 lg:mb-0">
-                    <div class="relative">
-                        <div id="feature-glow-bg" class="absolute -inset-6 lg:-inset-10 opacity-10 blur-[60px] lg:blur-[80px] rounded-full transition-all duration-700"></div>
-                        <div class="relative aspect-video lg:aspect-[4/3] rounded-2xl lg:rounded-[2.5rem] p-2 lg:p-3 bg-white shadow-xl lg:shadow-2xl border border-slate-100 overflow-hidden">
-                            <div class="w-full h-full rounded-xl lg:rounded-[2rem] overflow-hidden bg-slate-100 relative" id="feature-image-container"></div>
+                <!-- Visual Display Container - RIGHT SIDE, STICKY -->
+                <div class="w-full lg:w-[55%] order-first lg:order-last">
+                    <div class="sticky top-24 h-fit">
+                        <div class="relative">
+                            <div id="feature-glow-bg" class="absolute -inset-6 lg:-inset-10 opacity-10 blur-[60px] lg:blur-[80px] rounded-full transition-all duration-700"></div>
+                            <div class="relative aspect-video lg:aspect-[4/3] rounded-2xl lg:rounded-[2.5rem] p-2 lg:p-3 bg-white shadow-xl lg:shadow-2xl border border-slate-100 overflow-hidden">
+                                <div class="w-full h-full rounded-xl lg:rounded-[2rem] overflow-hidden bg-slate-100 relative" id="feature-image-container"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-                <!-- Sidebar Selectors -->
-                <div class="space-y-3 lg:space-y-4 lg:pb-12" id="feature-sidebar"></div>
             </div>
         </div>
     </section>
