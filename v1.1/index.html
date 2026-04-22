@@ -75,6 +75,11 @@
        .hero-1-bg {
            background-image: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.12) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
        }
+       /* Reusable gradient for all white background sections */
+       .section-gradient-bg {
+           background-image: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.12) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
+           background-color: #ffffff;
+       }
        .hero-section-sana {
            position: relative; min-height: 100vh; display: flex; flex-direction: column;
            background-image: url('https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=2670&auto=format&fit=crop');
@@ -156,7 +161,7 @@
        .work-step-card { padding: 0; border-radius: 2.5rem; border: 1px solid #f1f5f9; background: white; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; z-index: 10; cursor: pointer; overflow: hidden; display: flex; flex-direction: column; height: 580px; }
        .work-step-content { padding: 3rem; text-align: left; }
        .work-step-card.active { transform: scale(1.05); box-shadow: 0 40px 100px -20px rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4); }
-       .step-visual-stage { background: #f8fafc; height: 280px; width: 100%; margin-top: auto; border-top: 1px solid #f1f5f9; display: flex; items-center: center; justify-content: center; position: relative; overflow: hidden; }
+       .step-visual-stage { background: #f8fafc; height: 280px; width: 100%; margin-top: auto; border-top: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 
 
        /* --- TURNS FILES INTO ANSWERS (SIDE BY SIDE) --- */
@@ -300,8 +305,23 @@
            <div class="flex flex-col items-center mb-12 px-6">
                <h1 class="h-hero mb-6 mx-auto">Your Personal <span class="brand-accent">AI Assistant</span> <br> For All Your Files</h1>
                <p class="text-xl text-gray-500 mb-10 leading-relaxed font-medium max-w-2xl mx-auto">XeNo interprets your PDFs, documents, and photos and turns them into instant answers, summaries, and insights.</p>
-               <button class="px-10 py-4 rounded-full bg-black text-white font-bold uppercase tracking-widest text-xs hover:bg-brand transition-all shadow-2xl">Start for Free</button>
-           </div>
+               <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+
+                   <a
+                           href="https://play.google.com/store/apps/details?id=socials.productivity.ai"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="w-full sm:w-auto flex items-center justify-center gap-3 !bg-slate-900 hover:!bg-slate-800 !text-white !border-slate-700 !outline-none px-8 py-3.5 rounded-xl transition-all shadow-lg hover:shadow-xl group"
+                   >
+                       <svg class="w-7 h-7" viewBox="0 0 512 512" fill="currentColor">
+                           <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+                       </svg>
+                       <div class="text-left">
+                           <div class="text-[10px] font-semibold leading-none mb-1 opacity-80">GET IT ON</div>
+                           <div class="text-sm font-bold leading-none">Google Play</div>
+                       </div>
+                   </a>
+               </div>           </div>
 
            <div class="flex flex-col items-center justify-center relative w-full px-6">
                <div class="pro-voice-bar flex items-center gap-5 relative z-[100] mb-4">
@@ -353,9 +373,8 @@
 
 
    <!-- COMPARISON SECTION -->
-   <section id="comparison" class="section-py px-10 bg-gradient-to-tr from-[#fcfaff] via-white to-[#fffafc] border-b border-slate-50">
+   <section id="comparison" class="section-py px-10 section-gradient-bg border-b border-slate-50">
        <div class="max-w-6xl mx-auto text-center mb-20">
-           <div class="eyebrow-pill mx-auto">Comparison</div>
            <h2 class="h-section mb-4 leading-tight">Find Answers Across All Your Files:<br>Without The Scrolling And Searching</h2>
        </div>
        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
@@ -382,7 +401,7 @@
 
 
    <!-- PRIVACY DESIGNER GRID -->
-   <section class="section-py px-10 bg-gradient-to-tr from-indigo-50/50 via-white to-purple-50/50">
+   <section class="section-py px-10 section-gradient-bg">
        <div class="max-w-6xl mx-auto text-center mb-16">
            <div class="eyebrow-pill mx-auto">Data Ethics</div>
            <h2 class="h-section mb-4">Built for Privacy. Designed for Speed.</h2>
@@ -445,7 +464,7 @@
 
 
    <!-- TURNS FILES INTO ANSWERS (COLORFUL BG) -->
-   <section class="section-py px-10 bg-gradient-to-br from-indigo-100/40 via-white to-pink-100/40 relative overflow-hidden">
+   <section class="section-py px-10 section-gradient-bg relative overflow-hidden">
        <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
            <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-brand/10 rounded-full blur-[120px]"></div>
            <div class="absolute -bottom-48 -right-48 w-[600px] h-[600px] bg-brandLight/10 rounded-full blur-[120px]"></div>
@@ -482,7 +501,7 @@
 
 
    <!-- WHO NEEDS XENO AI -->
-   <section class="section-py bg-gradient-to-br from-[#fcfaff] via-white to-[#fffafc] overflow-hidden" id="personas">
+   <section class="section-py section-gradient-bg overflow-hidden" id="personas">
        <div class="max-w-7xl mx-auto px-10 mb-20 text-center">
            <div class="eyebrow-pill mx-auto">Personas</div>
            <h2 class="h-section mb-6">Who Needs XeNo AI</h2>
@@ -514,7 +533,7 @@
 
 
    <!-- KEY CAPABILITIES -->
-   <section id="capabilities" class="section-py px-10 bg-gradient-to-tr from-[#fcfaff] via-white to-[#fffafc]">
+   <section id="capabilities" class="section-py px-10 section-gradient-bg">
        <div class="max-w-7xl mx-auto capabilities-grid">
            <div class="sticky-col text-left">
                <span class="eyebrow-pill">Capabilities</span>
@@ -554,7 +573,7 @@
 
 
    <!-- TESTIMONIALS (HORIZONTAL SCROLL) -->
-   <section class="section-py px-10 bg-gradient-to-tr from-[#fcfaff] via-white to-[#fffafc]">
+   <section class="section-py px-10 section-gradient-bg">
        <div class="max-w-7xl mx-auto text-center mb-20">
            <div class="eyebrow-pill mx-auto">Testimonials</div>
            <h2 class="h-section mb-6">What They Say About XeNo AI?</h2>
@@ -578,7 +597,7 @@
 
 
    <!-- FAQ SECTION (ACCORDION) -->
-   <section class="section-py px-10 bg-gradient-to-tr from-[#fcfaff] via-white to-[#fffafc] border-t border-slate-50">
+   <section class="section-py px-10 section-gradient-bg border-t border-slate-50">
        <div class="max-w-4xl mx-auto">
            <h2 class="text-5xl font-black text-gray-900 mb-16 text-center">FAQs about XeNo AI</h2>
            <div class="space-y-4 text-left">
@@ -612,7 +631,21 @@
        <div class="max-w-4xl mx-auto">
            <h2 class="text-5xl font-black mb-10 leading-tight">Ready to stop searching and <span class="brand-accent">start knowing?</span></h2>
            <p class="text-slate-400 text-lg mb-14 font-medium">Join thousands of professionals building their private digital memory with XeNo.</p>
-           <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+           <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+               <a 
+                 href="https://play.google.com/store/apps/details?id=socials.productivity.ai" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 class="w-full sm:w-auto flex items-center justify-center gap-3 !bg-slate-900 hover:!bg-slate-800 !text-white !border-slate-700 !outline-none px-8 py-3.5 rounded-xl transition-all shadow-lg hover:shadow-xl group"
+               >
+                 <svg class="w-7 h-7" viewBox="0 0 512 512" fill="currentColor">
+                   <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+                 </svg>
+                 <div class="text-left">
+                   <div class="text-[10px] font-semibold leading-none mb-1 opacity-80">GET IT ON</div>
+                   <div class="text-sm font-bold leading-none">Google Play</div>
+                 </div>
+               </a>
                <button class="w-full sm:w-auto px-12 py-5 rounded-full bg-brand text-white font-bold text-lg hover:bg-brandLight transition-all shadow-2xl">Download for Free</button>
                <button class="w-full sm:w-auto px-12 py-5 rounded-full border border-white/20 text-white font-bold text-lg hover:bg-white/5 transition-all">Talk to Sales</button>
            </div>
