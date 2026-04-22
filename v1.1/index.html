@@ -287,85 +287,68 @@
    </div>
 
 
-   <!-- HERO 2 -->
-   <section class="hero-section-sana flex flex-col justify-between" id="hero-2">
-       <div class="option-label">Hero Option 2</div>
-       <div class="hero-overlay-sana"></div>
-       <div class="max-w-[1400px] mx-auto w-full flex-1 flex flex-col items-center text-center relative z-10 pt-48 pb-16 px-8">
-           <h1 class="h-hero mb-10 mx-auto text-center">Your Personal <span class="brand-accent">AI Assistant</span> <br> For All Your Files</h1>
-           <button class="px-10 py-4 rounded-full bg-brand text-white font-bold uppercase tracking-widest mt-10 shadow-xl">Get Started</button>
+
+
+
+
+   <!-- HERO 3 -->
+   <div class="hero-immersive-wrapper p-4"> <section class="hero-immersive-container rounded-[40px] overflow-hidden border border-slate-100 shadow-2xl">
+       <div class="neural-matrix"></div>
+       <div class="aurora-blur top-[20%] right-[5%]"></div>
+
+       <div class="max-w-[1400px] mx-auto flex flex-col items-center text-center w-full flex-1 relative z-10 pt-24 pb-12">
+           <div class="flex flex-col items-center mb-12 px-6">
+               <h1 class="h-hero mb-6 mx-auto">Your Personal <span class="brand-accent">AI Assistant</span> <br> For All Your Files</h1>
+               <p class="text-xl text-gray-500 mb-10 leading-relaxed font-medium max-w-2xl mx-auto">XeNo interprets your PDFs, documents, and photos and turns them into instant answers, summaries, and insights.</p>
+               <button class="px-10 py-4 rounded-full bg-black text-white font-bold uppercase tracking-widest text-xs hover:bg-brand transition-all shadow-2xl">Start for Free</button>
+           </div>
+
+           <div class="flex flex-col items-center justify-center relative w-full px-6">
+               <div class="pro-voice-bar flex items-center gap-5 relative z-[100] mb-4">
+                   <div class="mic-orb"><div class="mic-wave-aura"></div><i data-lucide="mic" class="w-5 h-5 relative z-10"></i></div>
+                   <div class="flex-1 text-left"><span class="static-prefix-el text-slate-400 text-base font-medium"></span><span class="dynamic-file-text-el text-black text-base font-semibold"></span><span class="typing-cursor"></span></div>
+               </div>
+
+               <div class="collage-container">
+                   <div id="grid-italy" class="updf-grid">
+                       <div class="app-block b-full-wide-lg p-6 flex items-center justify-between"><div><p class="text-xs font-black text-gray-900 uppercase">20 italy trip photos found</p></div><div class="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center text-brand"><i data-lucide="map-pin" class="w-4 h-4 text-brand"></i></div></div>
+                       <div class="app-block b-lg"><img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=800" class="w-full h-full object-cover"></div>
+                       <div class="app-block b-doc-med relative flex flex-col items-center justify-center p-6 text-center">
+                           <div class="absolute inset-0 blurry-text-bg"></div>
+                           <div class="centered-doc-content"><div class="tiny-pill bg-red-500">PDF</div><p class="text-xs font-black">Rome_Itinerary.pdf</p></div>
+                       </div>
+                       <div class="app-block b-tall"><img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=600" class="w-full h-full object-cover"></div>
+                   </div>
+                   <div id="grid-other" class="updf-grid">
+                       <div class="app-block b-full-wide-lg p-8 flex flex-col justify-center text-left">
+                           <div class="flex items-center justify-between mb-4">
+                               <div class="flex items-center gap-3"><i data-lucide="sparkles" class="w-5 h-5 text-brand"></i><h4 class="text-sm font-black text-gray-900 uppercase tracking-tighter">AI Analysis</h4></div>
+                               <div class="px-4 py-1 bg-brand/10 rounded-full"><span class="text-[9px] font-black text-brand uppercase animate-pulse">Summarizing...</span></div>
+                           </div>
+                           <div class="grid grid-cols-2 gap-8">
+                               <div class="space-y-2"><p class="text-[11px] text-gray-900 font-bold">Objective</p><p class="text-[10px] text-slate-500 leading-relaxed">Scale Q3 digital presence with localized assets.</p></div>
+                               <div class="space-y-2 border-l border-slate-100 pl-8"><p class="text-[11px] text-gray-900 font-bold">Savings</p><p class="text-[10px] text-slate-500 leading-relaxed">Est. $12,400 via optimization.</p></div>
+                           </div>
+                       </div>
+                   </div>
+                   <div id="grid-bank" class="updf-grid">
+                       <div class="app-block b-full-wide-lg p-8 flex flex-col justify-center text-left">
+                           <div class="flex items-center justify-between mb-4">
+                               <div class="flex items-center gap-3"><i data-lucide="trending-up" class="w-5 h-5 text-emerald-600"></i><h4 class="text-sm font-black text-gray-900 uppercase">Financial Audit</h4></div>
+                               <p class="text-3xl font-black text-emerald-600">+$2,450</p>
+                           </div>
+                           <p class="text-[10px] text-slate-500 font-medium">Automated detection across local statements.</p>
+                       </div>
+                       <div class="app-block b-doc-med bg-slate-900 flex items-center justify-center text-white"><i data-lucide="shield-check" class="w-6 h-6 opacity-40"></i></div>
+                   </div>
+               </div>
+           </div>
        </div>
-       <!-- FIXED PRIVACY BANNER -->
-       <div class="privacy-strip mt-auto" style="background: white;">
+       <div class="privacy-strip mt-auto">
            <div class="privacy-strip-pill"><i data-lucide="shield-check" class="w-4 h-4 text-brand"></i><span class="text-xs font-bold text-slate-900">100% Private</span></div>
            <p class="privacy-strip-text text-sm font-medium text-slate-500">XeNo works entirely offline and never uploads your files to the cloud.</p>
        </div>
    </section>
-
-
-   <!-- HERO 3 -->
-   <div class="hero-immersive-wrapper">
-       <section class="hero-immersive-container">
-           <div class="option-label">Hero Option 3</div>
-           <div class="neural-matrix"></div>
-           <div class="aurora-blur top-[20%] right-[5%]"></div>
-
-
-           <div class="max-w-[1400px] mx-auto flex flex-col items-center text-center w-full flex-1 relative z-10 pt-24 pb-12">
-               <div class="flex flex-col items-center mb-12 px-6">
-                   <h1 class="h-hero mb-6 mx-auto">Your Personal <span class="brand-accent">AI Assistant</span> <br> For All Your Files</h1>
-                   <p class="text-xl text-gray-500 mb-10 leading-relaxed font-medium max-w-2xl mx-auto">XeNo interprets your PDFs, documents, and photos and turns them into instant answers, summaries, and insights.</p>
-                   <button class="px-10 py-4 rounded-full bg-black text-white font-bold uppercase tracking-widest text-xs hover:bg-brand transition-all shadow-2xl">Start for Free</button>
-               </div>
-
-
-               <div class="flex flex-col items-center justify-center relative w-full px-6">
-                   <div class="pro-voice-bar flex items-center gap-5 relative z-[100] mb-4">
-                       <div class="mic-orb"><div class="mic-wave-aura"></div><i data-lucide="mic" class="w-5 h-5 relative z-10"></i></div>
-                       <div class="flex-1 text-left"><span class="static-prefix-el text-slate-400 text-base font-medium"></span><span class="dynamic-file-text-el text-black text-base font-semibold"></span><span class="typing-cursor"></span></div>
-                   </div>
-
-
-                   <div class="collage-container">
-                       <div id="grid-italy" class="updf-grid">
-                           <div class="app-block b-full-wide-lg p-6 flex items-center justify-between"><div><p class="text-xs font-black text-gray-900 uppercase">20 italy trip photos found</p></div><div class="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center text-brand"><i data-lucide="map-pin" class="w-4 h-4 text-brand"></i></div></div>
-                           <div class="app-block b-lg"><img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=800" class="w-full h-full object-cover"></div>
-                           <div class="app-block b-doc-med relative flex flex-col items-center justify-center p-6 text-center">
-                               <div class="absolute inset-0 blurry-text-bg"></div>
-                               <div class="centered-doc-content"><div class="tiny-pill bg-red-500">PDF</div><p class="text-xs font-black">Rome_Itinerary.pdf</p></div>
-                           </div>
-                           <div class="app-block b-tall"><img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=600" class="w-full h-full object-cover"></div>
-                       </div>
-                       <div id="grid-other" class="updf-grid">
-                           <div class="app-block b-full-wide-lg p-8 flex flex-col justify-center text-left">
-                               <div class="flex items-center justify-between mb-4">
-                                   <div class="flex items-center gap-3"><i data-lucide="sparkles" class="w-5 h-5 text-brand"></i><h4 class="text-sm font-black text-gray-900 uppercase tracking-tighter">AI Analysis</h4></div>
-                                   <div class="px-4 py-1 bg-brand/10 rounded-full"><span class="text-[9px] font-black text-brand uppercase animate-pulse">Summarizing...</span></div>
-                               </div>
-                               <div class="grid grid-cols-2 gap-8">
-                                   <div class="space-y-2"><p class="text-[11px] text-gray-900 font-bold">Objective</p><p class="text-[10px] text-slate-500 leading-relaxed">Scale Q3 digital presence with localized assets.</p></div>
-                                   <div class="space-y-2 border-l border-slate-100 pl-8"><p class="text-[11px] text-gray-900 font-bold">Savings</p><p class="text-[10px] text-slate-500 leading-relaxed">Est. $12,400 via optimization.</p></div>
-                               </div>
-                           </div>
-                       </div>
-                       <div id="grid-bank" class="updf-grid">
-                           <div class="app-block b-full-wide-lg p-8 flex flex-col justify-center text-left">
-                               <div class="flex items-center justify-between mb-4">
-                                   <div class="flex items-center gap-3"><i data-lucide="trending-up" class="w-5 h-5 text-emerald-600"></i><h4 class="text-sm font-black text-gray-900 uppercase">Financial Audit</h4></div>
-                                   <p class="text-3xl font-black text-emerald-600">+$2,450</p>
-                               </div>
-                               <p class="text-[10px] text-slate-500 font-medium">Automated detection across local statements.</p>
-                           </div>
-                           <div class="app-block b-doc-med bg-slate-900 flex items-center justify-center text-white"><i data-lucide="shield-check" class="w-6 h-6 opacity-40"></i></div>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="privacy-strip mt-auto">
-               <div class="privacy-strip-pill"><i data-lucide="shield-check" class="w-4 h-4 text-brand"></i><span class="text-xs font-bold text-slate-900">100% Private</span></div>
-               <p class="privacy-strip-text text-sm font-medium text-slate-500">XeNo works entirely offline and never uploads your files to the cloud.</p>
-           </div>
-       </section>
    </div>
 
 
