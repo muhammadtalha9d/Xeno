@@ -552,7 +552,7 @@
 <section id="comparison" class="section-py px-10 bg-white border-b border-slate-50">
     <div class="max-w-6xl mx-auto text-center mb-20">
         <h2 class="font-bold mb-2 text-[36px] leading-[1.2] text-slate-900">
-            Find Answers Across All Your Files
+            Find Answers Across Your PDFs, Docs, and Images
         </h2>
 
         <p class="font-normal text-[20px] leading-relaxed text-[rgb(71,85,105)]">
@@ -560,23 +560,35 @@
         </p>
     </div>
     <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
-        <div class="bg-white border border-slate-100 p-12 rounded-card shadow-sm">
-            <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-10 shadow-inner"><i data-lucide="x" class="w-8 h-8 text-slate-400"></i></div>
-            <h3 class="text-4xl font-extrabold text-gray-900 mb-6">Old Way</h3>
-            <ul class="space-y-8">
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1"><i data-lucide="x" class="w-3 h-3 text-slate-400"></i></div><p class="text-slate-500 font-medium leading-relaxed">You remember a vague detail, but scroll endlessly through files, screenshots, and folders trying to find it.</p></li>
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1"><i data-lucide="x" class="w-3 h-3 text-slate-400"></i></div><p class="text-slate-500 font-medium leading-relaxed">Related documents and photos are scattered across apps - you have to piece them manually.</p></li>
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1"><i data-lucide="x" class="w-3 h-3 text-slate-400"></i></div><p class="text-slate-500 font-medium leading-relaxed">Important info is buried in long documents, forcing you to read everything just to get the key point.</p></li>
-            </ul>
+        <div class="relative max-w-2xl p-[2px] rounded-3xl overflow-hidden group shadow-2xl">
+            <!-- Gradient Border -->
+            <div class="absolute inset-0 bg-gradient-to-br from-pink-400 via-blue-400 to-pink-400 opacity-30 group-hover:opacity-100 transition-opacity"></div>
+
+            <!-- Content -->
+            <div class="bg-white border border-white/20 p-12 rounded-[calc(1.5rem-2px)] shadow-sm relative">
+                <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-[110px] shadow-inner"><i data-lucide="x" class="w-8 h-8 text-slate-400"></i></div>
+                <h3 class="text-4xl font-extrabold text-gray-900 mb-6">Old Way</h3>
+                <ul class="space-y-8">
+                    <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1"><i data-lucide="x" class="w-3 h-3 text-slate-400"></i></div><p class="text-slate-500 font-medium leading-relaxed">You remember a vague detail, but scroll endlessly through files, screenshots, and folders trying to find it.</p></li>
+                    <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1"><i data-lucide="x" class="w-3 h-3 text-slate-400"></i></div><p class="text-slate-500 font-medium leading-relaxed">Related documents and photos are scattered across apps - you have to piece them manually.</p></li>
+                    <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1"><i data-lucide="x" class="w-3 h-3 text-slate-400"></i></div><p class="text-slate-500 font-medium leading-relaxed">Important info is buried in long documents, forcing you to read everything just to get the key point.</p></li>
+                </ul>
+            </div>
         </div>
-        <div class="bg-white border-2 border-indigo-50 p-12 rounded-card shadow-[0_40px_100px_-20px_rgba(99,102,241,0.15)]">
-            <div class="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center mb-10 shadow-lg shadow-indigo-200"><i data-lucide="check" class="w-8 h-8 text-white"></i></div>
-            <h3 class="text-4xl font-extrabold text-gray-900 mb-6">The XeNo Way</h3>
-            <ul class="space-y-8">
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-brand/10 flex items-center justify-center shrink-0 mt-1"><i data-lucide="check" class="w-3 h-3 text-brand"></i></div><p class="text-gray-900 font-bold leading-relaxed">No matter how vague the detail, XeNo pulls every related file, photo, and screenshot across your device instantly.</p></li>
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-brand/10 flex items-center justify-center shrink-0 mt-1"><i data-lucide="check" class="w-3 h-3 text-brand"></i></div><p class="text-gray-900 font-bold leading-relaxed">Automatically connects related content so you see the full picture instantly without app hopping.</p></li>
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-brand/10 flex items-center justify-center shrink-0 mt-1"><i data-lucide="check" class="w-3 h-3 text-brand"></i></div><p class="text-gray-900 font-bold leading-relaxed">Summarizes long documents and notes, giving you key insights in seconds.</p></li>
-            </ul>
+        <div class="relative max-w-2xl p-[2px] rounded-3xl overflow-hidden group shadow-2xl">
+            <!-- Gradient Border -->
+            <div class="absolute inset-0 bg-gradient-to-br from-pink-400 via-blue-400 to-pink-400 opacity-30 group-hover:opacity-100 transition-opacity"></div>
+
+            <!-- Content -->
+            <div class="bg-white border border-white/20 p-12 rounded-[calc(1.5rem-2px)] shadow-[0_40px_100px_-20px_rgba(99,102,241,0.15)] relative">
+                <div class="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center mb-[85px] shadow-lg shadow-indigo-200"><i data-lucide="check" class="w-8 h-8 text-white"></i></div>
+                <h3 class="text-4xl font-extrabold text-gray-900 mb-6">The XeNo Way</h3>
+                <ul class="space-y-8">
+                    <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-brand/10 flex items-center justify-center shrink-0 mt-1"><i data-lucide="check" class="w-3 h-3 text-brand"></i></div><p class="text-gray-900 font-bold leading-relaxed">No matter how vague the detail, XeNo pulls every related file, photo, and screenshot across your device instantly.</p></li>
+                    <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-brand/10 flex items-center justify-center shrink-0 mt-1"><i data-lucide="check" class="w-3 h-3 text-brand"></i></div><p class="text-gray-900 font-bold leading-relaxed">Automatically connects related content so you see the full picture instantly without app hopping.</p></li>
+                    <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-brand/10 flex items-center justify-center shrink-0 mt-1"><i data-lucide="check" class="w-3 h-3 text-brand"></i></div><p class="text-gray-900 font-bold leading-relaxed">Summarizes long documents and notes, giving you key insights in seconds.</p></li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>
