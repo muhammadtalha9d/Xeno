@@ -879,9 +879,9 @@
 
 
 
-<section class="py-24 px-4 bg-white/30 border-t border-white/50 overflow-hidden text-center">
+<section class="py-24 px-4 bg-white overflow-hidden text-center">
     <div class="max-w-7xl mx-auto">
-        <h2 class="text-[36px] font-bold tracking-tight text-slate-900 mb-6">Who Needs XeNo AI</h2>
+        <h2 class="text-[36px] font-bold tracking-tight text-slate-900 ">Who Needs XeNo AI</h2>
         <p class="text-slate-500 text-[20px] max-w-2xl mx-auto mb-16 leading-relaxed">XeNo is for professionals, students, and creators who hate manual sifting.</p>
 
 
@@ -1330,13 +1330,13 @@
     const carousel = document.getElementById('persona-carousel');
     personas.forEach(p => {
         const card = document.createElement('div');
-        card.className = "min-w-[85vw] md:min-w-[600px] aspect-[16/9] rounded-[2.5rem] overflow-hidden relative snap-center shadow-2xl border border-white/20 flex-shrink-0";
+        card.className = "min-w-[85vw] md:min-w-[600px] aspect-[16/9] rounded-[2.5rem] overflow-hidden relative snap-center border border-white/20 flex-shrink-0";
         card.innerHTML = `
                 <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover">
 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
 
 <!-- Gradient Border Wrapper -->
-<div class="absolute top-8 left-8 max-w-[80%] p-[2px] rounded-[2rem] overflow-hidden group shadow-2xl">
+<div class="absolute top-8 left-8 max-w-[80%] p-[2px] rounded-[2rem] overflow-hidden group">
     <div class="absolute inset-0 bg-gradient-to-br from-pink-400 via-blue-400 to-pink-400 opacity-100 transition-opacity"></div>
 
     <!-- Inner Card -->
