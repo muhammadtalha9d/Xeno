@@ -1,754 +1,539 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XeNo AI | Ask Your Files Anything</title>
+    <title>XeNo AI - Your Personal AI Assistant</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: '#6366f1',
-                        brandLight: '#a855f7',
-                        surface: '#FDFDFF',
-                        dark: '#0f172a',
-                        midnight: '#0f111a',
-                    },
-                    borderRadius: {
-                        'section': '3.5rem',
-                        'card': '2.5rem',
-                        'pill': '100px'
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #FFFFFF;
-            color: #1A1A1E;
-            letter-spacing: -0.02em;
-            -webkit-font-smoothing: antialiased;
+        body { font-family: 'Inter', sans-serif; }
+
+        @keyframes gradient-xy {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .animate-gradient-xy {
+            background-size: 400% 400%;
+            animation: gradient-xy 15s ease infinite;
         }
 
 
-        .option-label {
-            position: absolute; top: 2rem; left: 2rem; z-index: 100; background: #000; color: #fff;
-            padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 10px; font-weight: 800;
-            text-transform: uppercase; letter-spacing: 0.2em;
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.6); opacity: 0.5; }
+            50% { transform: scaleY(1.4); opacity: 1; }
+        }
+        .animate-wave {
+            animation: wave 0.8s ease-in-out infinite;
         }
 
 
-        /* --- STANDARDIZED DESIGN TOKENS --- */
-        .h-hero { font-size: 48px; font-weight: 800; line-height: 1.1; letter-spacing: -0.05em; color: #111; max-width: 650px; }
-        .h-section { font-size: 40px; font-weight: 800; line-height: 1.2; letter-spacing: -0.04em; color: #111; }
-        .sh-section { font-size: 18px; font-weight: 500; color: #64748b; line-height: 1.6; }
-        .brand-accent { color: #6366f1; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 
-        .eyebrow-pill {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.5rem 1rem; border-radius: 100px; font-size: 11px; font-weight: 800;
-            text-transform: uppercase; letter-spacing: 0.1em; background: #f1f5f9; color: #64748b;
-            margin-bottom: 1.5rem; transition: all 0.3s ease;
+        .transition-all { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        .hero-step { display: none; }
+        .hero-step.active { display: flex; }
+
+        .flow-line-path {
+            transition: stroke-dashoffset 1s ease-in-out;
         }
-        .active .eyebrow-pill { background: rgba(99, 102, 241, 0.1); color: #6366f1; }
-
-
-        /* --- SECTION WRAPPERS --- */
-        .section-py { padding-top: 9rem; padding-bottom: 9rem; }
-
-
-        /* --- HERO OPTIONS 1 & 2 --- */
-        .hero-1-wrapper { padding: 1.5rem; background-color: #ffffff; }
-        .hero-container-base {
-            position: relative; min-height: 90vh; border-radius: 0 0 80px 80px; overflow: hidden;
-            display: flex; flex-direction: column; background-color: #fbfbfe;
-        }
-        .hero-1-bg {
-            background-image: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.12) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
-        }
-        .hero-section-sana {
-            position: relative; min-height: 100vh; display: flex; flex-direction: column;
-            background-image: url('https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=2670&auto=format&fit=crop');
-            background-size: cover; background-position: center;
-        }
-        .hero-overlay-sana { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253, 251, 247, 0.92) 0%, rgba(245, 247, 255, 0.8) 100%); }
-
-
-        /* --- HERO 3 CANVAS --- */
-        .hero-immersive-wrapper { padding: 1.5rem; background-color: #ffffff; }
-        .hero-immersive-container {
-            position: relative; min-height: 100vh; border-radius: 0 0 80px 80px; overflow: hidden;
-            display: flex; flex-direction: column; background: #F8FAFF;
-        }
-        .neural-matrix {
-            position: absolute; inset: 0; pointer-events: none; z-index: 1;
-            background-image: radial-gradient(#6366f11a 1.5px, transparent 1.5px);
-            background-size: 32px 32px;
-            mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 95%);
-        }
-        .aurora-blur {
-            position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
-            border-radius: 50%; filter: blur(60px); animation: aurora-move 15s infinite alternate ease-in-out; z-index: 0;
-        }
-        @keyframes aurora-move { from { transform: translate(-10%, -10%); } to { transform: translate(10%, 10%); } }
-
-
-        .collage-container {
-            position: relative; width: 100%; max-width: 760px; height: 440px; margin-top: 1.5rem;
-            background: white; border-radius: 3.5rem; border: 1px solid #f1f5f9;
-            box-shadow: 0 40px 100px -30px rgba(0,0,0,0.08); padding: 2rem;
-            pointer-events: none;
-        }
-        .updf-grid {
-            display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(4, 1fr);
-            gap: 12px; width: calc(100% - 4rem); height: calc(100% - 4rem);
-            position: absolute; top: 2rem; left: 2rem;
-            opacity: 0; transform: scale(0.9) translateY(30px); transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .updf-grid.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
-        .app-block {
-            background: white; border-radius: 2rem; overflow: hidden; box-shadow: 0 15px 35px -5px rgba(0,0,0,0.1);
-            border: 1.5px solid #f8fafc; position: relative; transform: translateY(20px); opacity: 0;
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .updf-grid.active .app-block { transform: translateY(0); opacity: 1; }
-        .b-lg { grid-column: span 3; grid-row: span 3; }
-        .b-tall { grid-column: span 2; grid-row: span 4; }
-        .b-full-wide-lg { grid-column: span 6; grid-row: span 2; }
-        .b-doc-med { grid-column: span 2; grid-row: span 2; }
-
-
-        .blurry-text-bg {
-            position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1.2px, transparent 1.2px);
-            background-size: 12px 18px; filter: blur(2px); opacity: 0.3;
-        }
-        .centered-doc-content { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1rem; }
-        .tiny-pill { font-size: 8px; font-weight: 900; text-transform: uppercase; padding: 2px 10px; border-radius: 100px; margin-bottom: 8px; color: white; }
-
-
-        .pro-voice-bar {
-            background: rgba(255,255,255,0.8); backdrop-filter: blur(25px); border: 1.5px solid white;
-            box-shadow: 0 30px 60px -15px rgba(99, 102, 241, 0.15); padding: 0.4rem; border-radius: 4rem; width: 100%; max-width: 580px; z-index: 100;
-        }
-        .mic-orb {
-            width: 2.75rem; height: 2.75rem; background: #6366f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;
-            position: relative; box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
-        }
-        .mic-wave-aura { position: absolute; inset: -6px; border-radius: 50%; background: #6366f120; animation: pulse-bloom 2.5s infinite; }
-
-
-        /* --- HOW XENO WORKS ARROWS (FIXED) --- */
-        .step-arrow-line-wrapper { position: absolute; width: 140px; top: 50%; transform: translateY(-50%); z-index: 1; pointer-events: none; }
-        .sa-1 { left: 28%; } .sa-2 { left: 61%; }
-        .sa-line { stroke: #e2e8f0; stroke-width: 2; stroke-dasharray: 8; transition: all 0.5s ease; }
-        .active-arrow .sa-line { stroke: #6366f1; stroke-dasharray: 0; stroke-width: 3; }
-
-
-        .work-step-card { padding: 0; border-radius: 2.5rem; border: 1px solid #f1f5f9; background: white; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; z-index: 10; cursor: pointer; overflow: hidden; display: flex; flex-direction: column; height: 580px; }
-        .work-step-content { padding: 3rem; text-align: left; }
-        .work-step-card.active { transform: scale(1.05); box-shadow: 0 40px 100px -20px rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4); }
-        .step-visual-stage { background: #f8fafc; height: 280px; width: 100%; margin-top: auto; border-top: 1px solid #f1f5f9; display: flex; items-center: center; justify-content: center; position: relative; overflow: hidden; }
-
-
-        /* --- TURNS FILES INTO ANSWERS (SIDE BY SIDE) --- */
-        .feature-row { display: flex; flex-direction: column; align-items: center; gap: 4rem; margin-bottom: 12rem; }
-        @media (min-width: 1024px) {
-            .feature-row { flex-direction: row; }
-            .feature-row-reverse { flex-direction: row-reverse; }
-        }
-        .feature-text-block { flex: 1; text-align: left; }
-        .feature-visual-block { flex: 1; width: 100%; max-width: 580px; height: 380px; border-radius: 3.5rem; background: #FBFBFE; border: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-        .feature-visual-block::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(#6366f108 1.5px, transparent 1.5px); background-size: 24px 24px; }
-
-
-        /* --- WHO NEEDS XENO (CINEMATIC) --- */
-        .persona-carousel {
-            display: flex; overflow-x: auto; gap: 3rem; scroll-snap-type: x mandatory;
-            padding: 2rem 5% 4rem; -ms-overflow-style: none; scrollbar-width: none;
-        }
-        .persona-carousel::-webkit-scrollbar { display: none; }
-        .persona-card {
-            flex: 0 0 85%; scroll-snap-align: center; height: 520px; border-radius: 4rem;
-            position: relative; overflow: hidden; transform: scale(0.96); opacity: 0.5;
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(0,0,0,0.05);
-        }
-        @media (min-width: 1024px) { .persona-card { flex: 0 0 1000px; } }
-        .persona-card.focused { transform: scale(1); opacity: 1; box-shadow: 0 50px 100px -30px rgba(0,0,0,0.25); }
-        .persona-content-box {
-            position: absolute; top: 3rem; left: 3rem; width: 420px; z-index: 10;
-            background: rgba(255,255,255,0.96); backdrop-filter: blur(20px);
-            padding: 2.5rem; border-radius: 2.5rem; border: 1px solid white;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
-        }
-        .persona-ui-snippet { background: white; border-radius: 1.25rem; padding: 1.25rem; margin-top: 1.5rem; border: 1px solid #f1f5f9; box-shadow: 0 10px 25px rgba(0,0,0,0.04); }
-
-
-        /* --- KEY CAPABILITIES (MAGICPOST) --- */
-        .capabilities-grid { display: grid; gap: 6rem; position: relative; }
-        @media (min-width: 1024px) { .capabilities-grid { grid-template-columns: 1fr 1.2fr; } }
-        .sticky-col { position: sticky; top: 140px; height: fit-content; }
-        .scroll-col { position: relative; padding-left: 5rem; }
-        .timeline-bar { position: absolute; left: 1.15rem; top: 0; bottom: 0; width: 2px; background: #e2e8f0; z-index: 1; }
-        .cap-block { position: relative; margin-bottom: 5rem; }
-        .cap-num-icon { position: absolute; left: -5.15rem; top: 0; width: 48px; height: 48px; background: white; color: #6366f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 2px solid #6366f1; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.1); }
-        .magic-card { background: white; border-radius: 2.5rem; border: 1px solid #f1f5f9; padding: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.02); transition: all 0.4s ease; }
-        .magic-card:hover { transform: translateY(-5px); border-color: rgba(99,102,241,0.2); }
-        .card-visual-box { background: #FBFBFE; border-radius: 1.5rem; height: 280px; margin-top: 2rem; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; position: relative; }
-
-
-        /* --- TESTIMONIAL SCROLL BAR --- */
-        .testimonial-carousel {
-            display: flex; overflow-x: auto; gap: 2rem; scroll-snap-type: x mandatory;
-            padding: 2rem 5% 4rem; -ms-overflow-style: none; scrollbar-width: none;
-        }
-        .testimonial-carousel::-webkit-scrollbar { display: none; }
-        .t-scroller-card {
-            flex: 0 0 380px; scroll-snap-align: center; background: white; border-radius: 2.5rem;
-            padding: 2.5rem; border: 1px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .t-quote-symbol { font-family: serif; font-size: 72px; line-height: 1; color: #6366f1; opacity: 0.12; margin-bottom: -1rem; pointer-events: none; }
-
-
-        /* --- FAQ SECTION (ACCORDION) --- */
-        .faq-item { border-bottom: 1px solid #f1f5f9; padding: 2rem 0; cursor: pointer; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: all 0.4s ease; opacity: 0; }
-        .faq-item.active .faq-answer { max-height: 500px; opacity: 1; margin-top: 1.5rem; }
-        .faq-plus { transition: transform 0.4s; }
-        .faq-item.active .faq-plus { transform: rotate(45deg); color: #6366f1; }
-
-
-        /* --- ARCHITECTURE --- */
-        .arch-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%); filter: blur(80px); right: -100px; top: 50%; transform: translateY(-50%); }
-        .v-badge { background: #1e293b; border: 1px solid #334155; padding: 0.5rem 1.25rem; border-radius: 100px; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #fff; }
-
-
-        /* --- PRIVACY STRIP (FIXED) --- */
-        .privacy-strip {
-            width: 100%; background: linear-gradient(90deg, #f5f7ff 0%, #ffffff 50%, #f5f7ff 100%);
-            padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: center; gap: 1.25rem;
-            border-top: 1px solid rgba(99, 102, 241, 0.05); position: relative; z-index: 20;
-        }
-        .privacy-strip-pill { background: white; border: 1px solid #e0e7ff; padding: 0.4rem 0.9rem; border-radius: 9999px; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(99, 102, 241, 0.05); }
-
-
-        .typing-cursor { display: inline-block; width: 1.5px; height: 1.1em; background-color: #6366f1; margin-left: 4px; animation: blink 1s infinite; vertical-align: middle; }
-        @keyframes blink { 50% { opacity: 0 } }
     </style>
 </head>
-<body class="font-sans overflow-x-hidden">
+<body class="min-h-screen text-slate-900 overflow-x-hidden relative pb-20">
 
 
-<!-- Navigation -->
-<nav id="navbar" class="fixed top-0 w-full z-[100] transition-all duration-500 py-8 px-10">
-    <div class="max-w-[1400px] mx-auto flex items-center justify-between">
-        <div class="flex items-center gap-3 group cursor-pointer">
-            <div class="w-7 h-7 bg-brand rounded-full items-center justify-center flex"><div class="w-4 h-4 bg-white rounded-sm rotate-45 transition-transform group-hover:rotate-90"></div></div>
-            <span class="text-xl font-extrabold tracking-tighter uppercase text-black">XeNo</span>
+<!-- GLOBAL BACKGROUND DEPTH -->
+<div class="fixed inset-0 -z-10 opacity-[0.20]" style="background: linear-gradient(145deg, #FFFFFF 20%, #468CFF 45%, #FB76F9 75%, #FFFFFF 100%); filter: blur(120px);"></div>
+
+
+<!-- NAVIGATION -->
+<nav class="flex items-center justify-between px-8 py-4 max-w-7xl mx-auto backdrop-blur-md sticky top-0 z-50">
+    <div class="flex items-center gap-8">
+        <div class="flex items-center gap-1 font-bold text-2xl tracking-tighter">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white" style="background: linear-gradient(to bottom right, #468CFF, #FB76F9)">X</div>
+            <span>XeNo</span>
         </div>
-        <div class="hidden md:flex items-center gap-12">
-            <a href="#comparison" class="text-[10px] font-bold text-gray-900/60 hover:text-brand transition-colors uppercase tracking-[0.2em]">Efficiency</a>
-            <button class="px-8 py-3 rounded-full bg-black text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-brand transition-all shadow-lg">Download App</button>
+        <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
+            <a href="#" class="hover:text-black transition-colors">Pricing</a>
+            <a href="#" class="hover:text-black transition-colors">Security</a>
+            <button class="flex items-center gap-1 hover:text-black transition-colors">How it works <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+            <button class="flex items-center gap-1 hover:text-black transition-colors">For teams <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+            <button class="flex items-center gap-1 hover:text-black transition-colors">Customer stories <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
         </div>
+    </div>
+    <div class="flex items-center">
+        <button class="flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white rounded-full transition-all shadow-lg hover:scale-105 active:scale-95" style="background: linear-gradient(135deg, #468CFF, #FB76F9)">
+            <i data-lucide="download" class="w-4 h-4" stroke-width="3"></i> Download the App
+        </button>
     </div>
 </nav>
 
 
-<!-- HERO 1 -->
-<div class="hero-1-wrapper">
-    <section class="hero-container-base hero-1-bg">
-        <div class="option-label">Hero Option 1</div>
-        <div class="max-w-6xl mx-auto flex flex-col items-center text-center relative z-10 pt-40 pb-12 px-8">
-            <h1 class="h-hero mb-8">Your Personal <span class="brand-accent">AI Assistant</span> <br> For All Your Files</h1>
-            <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-14 font-medium leading-relaxed">XeNo interprets your PDFs, documents, and photos and turns them into instant answers, summaries, and insights.</p>
-            <div class="flex flex-col items-center gap-10 w-full">
-                <div class="w-full max-w-xl p-1.5 rounded-[2rem] bg-white border border-gray-100 shadow-xl shadow-indigo-500/5 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-brand/5 flex items-center justify-center text-brand"><i data-lucide="search" class="w-5 h-5"></i></div>
-                    <div class="flex-1 text-left"><span class="static-prefix-el text-gray-400 font-medium"></span><span class="dynamic-file-text-el text-gray-900 font-medium"></span><span class="typing-cursor"></span></div>
+<!-- HERO SECTION -->
+<section id="hero-section" class="pt-20 pb-24 px-4 text-center max-w-5xl mx-auto">
+    <h1 class="text-[48px] font-bold tracking-tight mb-6 text-slate-900 leading-[1.15]">
+        Your Personal AI Assistant <br />
+        <span class="bg-clip-text text-transparent" style="background-image: linear-gradient(to right, #468CFF, #FB76F9)">For All Your Files</span>
+    </h1>
+    <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 mb-12 leading-relaxed">
+        XeNo interprets your PDFs, documents, and photos and turns them into instant answers, summaries, and insights.
+    </p>
+    <button class="flex items-center gap-3 px-10 py-5 text-lg font-bold text-white rounded-2xl transition-all shadow-2xl hover:scale-105 active:scale-95 mx-auto mb-16" style="background: linear-gradient(135deg, #468CFF, #FB76F9)">
+        <i data-lucide="download" class="w-6 h-6" stroke-width="2.5"></i> Download the App
+    </button>
+
+
+    <!-- HERO INTERACTIVE ANIMATION BOX -->
+    <div class="relative max-w-4xl mx-auto p-[2px] rounded-[2.6rem] overflow-hidden group shadow-2xl">
+        <div class="absolute inset-0 bg-gradient-to-br from-pink-400 via-blue-400 to-pink-400 animate-gradient-xy opacity-30 group-hover:opacity-100 transition-opacity"></div>
+        <div class="bg-[#F8F9FE] rounded-[2.5rem] relative aspect-[16/9] flex flex-col border border-white/20 overflow-hidden">
+
+            <!-- Search Bar Mockup -->
+            <div class="px-6 pt-6 text-left">
+                <div class="bg-white rounded-full p-2.5 shadow-sm border border-slate-200/60 flex items-center justify-between gap-3 relative">
+                    <div class="flex items-center gap-2">
+                        <button class="p-2 text-slate-300"><i data-lucide="plus" class="w-[18px] h-[18px]"></i></button>
+                        <div class="flex items-center gap-1 bg-slate-900 text-white px-3 py-1 rounded-full text-[10px] font-bold">
+                            <i data-lucide="sparkles" class="w-3 h-3 text-pink-400"></i><span>AI Search</span>
+                        </div>
+                    </div>
+                    <div id="typewriter-container" class="flex-1 text-sm font-medium text-slate-400 px-2 min-h-[20px]">
+                        Ask XeNo anything...
+                    </div>
+                    <button class="bg-slate-900 text-white p-2 rounded-full"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></button>
                 </div>
-                <button class="px-10 py-4 rounded-full bg-black text-white font-bold text-sm hover:bg-brand transition-all shadow-lg">Download App</button>
-            </div>
-        </div>
-        <!-- FIXED PRIVACY BANNER -->
-        <div class="privacy-strip mt-auto">
-            <div class="privacy-strip-pill"><i data-lucide="shield-check" class="w-4 h-4 text-brand"></i><span class="text-xs font-bold text-slate-900">100% Private</span></div>
-            <p class="privacy-strip-text text-sm font-medium text-slate-500">XeNo works entirely offline and never uploads your files to the cloud.</p>
-        </div>
-    </section>
-</div>
-
-
-<!-- HERO 2 -->
-<section class="hero-section-sana flex flex-col justify-between" id="hero-2">
-    <div class="option-label">Hero Option 2</div>
-    <div class="hero-overlay-sana"></div>
-    <div class="max-w-[1400px] mx-auto w-full flex-1 flex flex-col items-center text-center relative z-10 pt-48 pb-16 px-8">
-        <h1 class="h-hero mb-10 mx-auto text-center">Your Personal <span class="brand-accent">AI Assistant</span> <br> For All Your Files</h1>
-        <button class="px-10 py-4 rounded-full bg-brand text-white font-bold uppercase tracking-widest mt-10 shadow-xl">Get Started</button>
-    </div>
-    <!-- FIXED PRIVACY BANNER -->
-    <div class="privacy-strip mt-auto" style="background: white;">
-        <div class="privacy-strip-pill"><i data-lucide="shield-check" class="w-4 h-4 text-brand"></i><span class="text-xs font-bold text-slate-900">100% Private</span></div>
-        <p class="privacy-strip-text text-sm font-medium text-slate-500">XeNo works entirely offline and never uploads your files to the cloud.</p>
-    </div>
-</section>
-
-
-<!-- HERO 3 -->
-<div class="hero-immersive-wrapper">
-    <section class="hero-immersive-container">
-        <div class="option-label">Hero Option 3</div>
-        <div class="neural-matrix"></div>
-        <div class="aurora-blur top-[20%] right-[5%]"></div>
-
-
-        <div class="max-w-[1400px] mx-auto flex flex-col items-center text-center w-full flex-1 relative z-10 pt-24 pb-12">
-            <div class="flex flex-col items-center mb-12 px-6">
-                <h1 class="h-hero mb-6 mx-auto">Your Personal <span class="brand-accent">AI Assistant</span> <br> For All Your Files</h1>
-                <p class="text-xl text-gray-500 mb-10 leading-relaxed font-medium max-w-2xl mx-auto">XeNo interprets your PDFs, documents, and photos and turns them into instant answers, summaries, and insights.</p>
-                <button class="px-10 py-4 rounded-full bg-black text-white font-bold uppercase tracking-widest text-xs hover:bg-brand transition-all shadow-2xl">Start for Free</button>
             </div>
 
-
-            <div class="flex flex-col items-center justify-center relative w-full px-6">
-                <div class="pro-voice-bar flex items-center gap-5 relative z-[100] mb-4">
-                    <div class="mic-orb"><div class="mic-wave-aura"></div><i data-lucide="mic" class="w-5 h-5 relative z-10"></i></div>
-                    <div class="flex-1 text-left"><span class="static-prefix-el text-slate-400 text-base font-medium"></span><span class="dynamic-file-text-el text-black text-base font-semibold"></span><span class="typing-cursor"></span></div>
+            <!-- Center Stage Content -->
+            <div id="hero-stage" class="flex-1 flex items-center justify-center p-8 relative">
+                <!-- Listening State -->
+                <div id="step-listening" class="hero-step active flex-col items-center gap-6 transition-all opacity-0">
+                    <div class="bg-white py-3 px-6 rounded-full shadow-lg border border-slate-100 flex flex-col items-start gap-2 relative">
+                        <div class="flex items-center gap-1.5 h-6" id="audio-wave">
+                            <!-- Wave bars generated by JS -->
+                        </div>
+                        <span class="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-pink-500 tracking-tight">Listening...</span>
+                    </div>
+                    <div class="w-20 h-20 rounded-full flex items-center justify-center text-white shadow-xl relative" style="background: linear-gradient(135deg, #FB76F9, #468CFF)">
+                        <div class="absolute inset-0 rounded-full animate-ping opacity-25 bg-pink-400"></div>
+                        <i data-lucide="mic" class="w-8 h-8"></i>
+                    </div>
                 </div>
 
 
-                <div class="collage-container">
-                    <div id="grid-italy" class="updf-grid">
-                        <div class="app-block b-full-wide-lg p-6 flex items-center justify-between"><div><p class="text-xs font-black text-gray-900 uppercase">20 italy trip photos found</p></div><div class="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center text-brand"><i data-lucide="map-pin" class="w-4 h-4 text-brand"></i></div></div>
-                        <div class="app-block b-lg"><img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=800" class="w-full h-full object-cover"></div>
-                        <div class="app-block b-doc-med relative flex flex-col items-center justify-center p-6 text-center">
-                            <div class="absolute inset-0 blurry-text-bg"></div>
-                            <div class="centered-doc-content"><div class="tiny-pill bg-red-500">PDF</div><p class="text-xs font-black">Rome_Itinerary.pdf</p></div>
-                        </div>
-                        <div class="app-block b-tall"><img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=600" class="w-full h-full object-cover"></div>
+                <!-- Analyzing State -->
+                <div id="step-analyzing" class="hero-step flex-col items-center gap-4 transition-all opacity-0">
+                    <div class="relative">
+                        <i data-lucide="loader-2" class="w-12 h-12 text-blue-500 animate-spin"></i>
+                        <i data-lucide="sparkles" class="w-5 h-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-pink-400"></i>
                     </div>
-                    <div id="grid-other" class="updf-grid">
-                        <div class="app-block b-full-wide-lg p-8 flex flex-col justify-center text-left">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center gap-3"><i data-lucide="sparkles" class="w-5 h-5 text-brand"></i><h4 class="text-sm font-black text-gray-900 uppercase tracking-tighter">AI Analysis</h4></div>
-                                <div class="px-4 py-1 bg-brand/10 rounded-full"><span class="text-[9px] font-black text-brand uppercase animate-pulse">Summarizing...</span></div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-8">
-                                <div class="space-y-2"><p class="text-[11px] text-gray-900 font-bold">Objective</p><p class="text-[10px] text-slate-500 leading-relaxed">Scale Q3 digital presence with localized assets.</p></div>
-                                <div class="space-y-2 border-l border-slate-100 pl-8"><p class="text-[11px] text-gray-900 font-bold">Savings</p><p class="text-[10px] text-slate-500 leading-relaxed">Est. $12,400 via optimization.</p></div>
-                            </div>
-                        </div>
+                    <p id="analysis-text" class="text-sm font-bold text-slate-500 animate-pulse tracking-wide uppercase">Analyzing Sources...</p>
+                </div>
+
+
+                <!-- Result: Documents -->
+                <div id="step-results-docs" class="hero-step w-full h-full flex-col transition-all opacity-0">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
+                        <div class="flex items-center gap-4 p-4 bg-white border border-slate-100 rounded-3xl shadow-sm"><div class="w-10 h-10 rounded-xl bg-green-50 text-green-500 flex items-center justify-center"><i data-lucide="file-spreadsheet" class="w-5 h-5"></i></div><div class="flex-1 font-bold text-slate-800">Q3_Spend.xlsx</div><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-500"></i></div>
+                        <div class="flex items-center gap-4 p-4 bg-white border border-slate-100 rounded-3xl shadow-sm"><div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center"><i data-lucide="presentation" class="w-5 h-5"></i></div><div class="flex-1 font-bold text-slate-800">Growth.pptx</div><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-500"></i></div>
+                        <div class="flex items-center gap-4 p-4 bg-white border border-slate-100 rounded-3xl shadow-sm md:col-span-2"><div class="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center"><i data-lucide="file-text" class="w-5 h-5"></i></div><div class="flex-1 font-bold text-slate-800">Budget_Approved.pdf</div><div class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded-full uppercase tracking-tighter">Relevant</div></div>
                     </div>
-                    <div id="grid-bank" class="updf-grid">
-                        <div class="app-block b-full-wide-lg p-8 flex flex-col justify-center text-left">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center gap-3"><i data-lucide="trending-up" class="w-5 h-5 text-emerald-600"></i><h4 class="text-sm font-black text-gray-900 uppercase">Financial Audit</h4></div>
-                                <p class="text-3xl font-black text-emerald-600">+$2,450</p>
-                            </div>
-                            <p class="text-[10px] text-slate-500 font-medium">Automated detection across local statements.</p>
-                        </div>
-                        <div class="app-block b-doc-med bg-slate-900 flex items-center justify-center text-white"><i data-lucide="shield-check" class="w-6 h-6 opacity-40"></i></div>
+                </div>
+
+
+                <!-- Result: Photos -->
+                <div id="step-results-photos" class="hero-step w-full h-full flex-col transition-all opacity-0">
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-lg border-2 border-white transition-transform hover:scale-105"><img src="https://images.unsplash.com/photo-1552053832?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover"></div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-lg border-2 border-white transition-transform hover:scale-105"><img src="https://images.unsplash.com/photo-1552053833?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover"></div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-lg border-2 border-white transition-transform hover:scale-105"><img src="https://images.unsplash.com/photo-1552053834?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover"></div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="privacy-strip mt-auto">
-            <div class="privacy-strip-pill"><i data-lucide="shield-check" class="w-4 h-4 text-brand"></i><span class="text-xs font-bold text-slate-900">100% Private</span></div>
-            <p class="privacy-strip-text text-sm font-medium text-slate-500">XeNo works entirely offline and never uploads your files to the cloud.</p>
-        </div>
-    </section>
-</div>
 
-
-<!-- COMPARISON SECTION -->
-<section id="comparison" class="section-py px-10 bg-gradient-to-tr from-[#fcfaff] via-white to-[#fffafc] border-b border-slate-50">
-    <div class="max-w-6xl mx-auto text-center mb-20">
-        <div class="eyebrow-pill mx-auto">Comparison</div>
-        <h2 class="h-section mb-4 leading-tight">Find Answers Across All Your Files:<br>Without The Scrolling And Searching</h2>
-    </div>
-    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
-        <div class="bg-white border border-slate-100 p-12 rounded-card shadow-sm">
-            <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-10 shadow-inner"><i data-lucide="x" class="w-8 h-8 text-slate-400"></i></div>
-            <h3 class="text-4xl font-extrabold text-gray-900 mb-6">Old Way</h3>
-            <ul class="space-y-8">
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1"><i data-lucide="x" class="w-3 h-3 text-slate-400"></i></div><p class="text-slate-500 font-medium leading-relaxed">You remember a vague detail, but scroll endlessly through files, screenshots, and folders trying to find it.</p></li>
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1"><i data-lucide="x" class="w-3 h-3 text-slate-400"></i></div><p class="text-slate-500 font-medium leading-relaxed">Related documents and photos are scattered across apps - you have to piece them manually.</p></li>
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1"><i data-lucide="x" class="w-3 h-3 text-slate-400"></i></div><p class="text-slate-500 font-medium leading-relaxed">Important info is buried in long documents, forcing you to read everything just to get the key point.</p></li>
-            </ul>
-        </div>
-        <div class="bg-white border-2 border-indigo-50 p-12 rounded-card shadow-[0_40px_100px_-20px_rgba(99,102,241,0.15)]">
-            <div class="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center mb-10 shadow-lg shadow-indigo-200"><i data-lucide="check" class="w-8 h-8 text-white"></i></div>
-            <h3 class="text-4xl font-extrabold text-gray-900 mb-6">The XeNo Way</h3>
-            <ul class="space-y-8">
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-brand/10 flex items-center justify-center shrink-0 mt-1"><i data-lucide="check" class="w-3 h-3 text-brand"></i></div><p class="text-gray-900 font-bold leading-relaxed">No matter how vague the detail, XeNo pulls every related file, photo, and screenshot across your device instantly.</p></li>
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-brand/10 flex items-center justify-center shrink-0 mt-1"><i data-lucide="check" class="w-3 h-3 text-brand"></i></div><p class="text-gray-900 font-bold leading-relaxed">Automatically connects related content so you see the full picture instantly without app hopping.</p></li>
-                <li class="flex items-start gap-4"><div class="w-6 h-6 rounded-full bg-brand/10 flex items-center justify-center shrink-0 mt-1"><i data-lucide="check" class="w-3 h-3 text-brand"></i></div><p class="text-gray-900 font-bold leading-relaxed">Summarizes long documents and notes, giving you key insights in seconds.</p></li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-
-<!-- PRIVACY DESIGNER GRID -->
-<section class="section-py px-10 bg-gradient-to-tr from-indigo-50/50 via-white to-purple-50/50">
-    <div class="max-w-6xl mx-auto text-center mb-16">
-        <div class="eyebrow-pill mx-auto">Data Ethics</div>
-        <h2 class="h-section mb-4">Built for Privacy. Designed for Speed.</h2>
-        <p class="sh-section">XeNo works on your device, so your files stay private while answers stay fast.</p>
-    </div>
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
-        <div class="md:col-span-2 bg-white border border-slate-100 p-10 rounded-card shadow-sm transition-transform hover:-translate-y-1">
-            <div class="w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-6"><i data-lucide="cpu" class="w-6 h-6"></i></div>
-            <h4 class="text-xl font-bold text-gray-900 mb-3">On-Device Processing</h4>
-            <p class="text-sm text-slate-500 font-medium leading-relaxed">Your documents are indexed locally for quick retrieval without cloud latency.</p>
-        </div>
-        <div class="md:col-span-3 bg-white border border-slate-100 p-10 rounded-card shadow-sm transition-transform hover:-translate-y-1">
-            <div class="w-12 h-12 rounded-xl bg-brandLight/10 flex items-center justify-center text-brandLight mb-6"><i data-lucide="cloud-off" class="w-6 h-6"></i></div>
-            <h4 class="text-xl font-bold text-gray-900 mb-3">No Cloud Dependence</h4>
-            <p class="text-sm text-slate-500 font-medium leading-relaxed">Your everyday file searches and summaries don’t rely on uploading files elsewhere.</p>
-        </div>
-        <div class="md:col-span-3 bg-white border border-slate-100 p-10 rounded-card shadow-sm transition-transform hover:-translate-y-1">
-            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 mb-6"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
-            <h4 class="text-xl font-bold text-gray-900 mb-3">Private by Design</h4>
-            <p class="text-sm text-slate-500 font-medium leading-relaxed">Ask questions about sensitive files with absolute control over your data.</p>
-        </div>
-        <div class="md:col-span-2 bg-white border border-slate-100 p-10 rounded-card shadow-sm transition-transform hover:-translate-y-1">
-            <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-600 mb-6"><i data-lucide="wifi-off" class="w-6 h-6"></i></div>
-            <h4 class="text-xl font-bold text-gray-900 mb-3">Works Anywhere</h4>
-            <p class="text-sm text-slate-500 font-medium leading-relaxed">Get answers even when you’re offline.</p>
-        </div>
-    </div>
-</section>
-
-
-<!-- HOW XENO WORKS -->
-<section class="section-py px-10 bg-slate-900 relative" id="work-steps-container">
-    <div class="max-w-6xl mx-auto text-center mb-24 text-white">
-        <div class="eyebrow-pill mx-auto" style="background: rgba(255,255,255,0.05); color: white;">The Flow</div>
-        <h2 class="text-4xl font-extrabold mb-4">How Xeno Works</h2>
-        <p class="text-slate-400 text-lg">A simple 3-step process to unlocking your digital memory.</p>
-    </div>
-
-
-    <!-- Arrows Gutter -->
-    <div class="step-arrow-line-wrapper sa-1 hidden md:block"><svg width="140" height="10" viewBox="0 0 140 10" fill="none"><path d="M0 5H130" class="sa-line" /><path d="M130 5L125 0V10L130 5Z" fill="#e2e8f0" /></svg></div>
-    <div class="step-arrow-line-wrapper sa-2 hidden md:block"><svg width="140" height="10" viewBox="0 0 140 10" fill="none"><path d="M0 5H130" class="sa-line" /><path d="M130 5L125 0V10L130 5Z" fill="#e2e8f0" /></svg></div>
-
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative max-w-7xl mx-auto z-10">
-        <div id="work-step-1" class="work-step-card active">
-            <div class="work-step-content"><div class="eyebrow-pill">Step 01</div><h3 class="text-xl font-extrabold text-gray-900 leading-tight">XeNo Contextualizes Your Files</h3><p class="text-sm text-slate-500 mt-4 leading-relaxed">XeNo securely reads the files you choose and understands what’s inside.</p></div>
-            <div class="step-visual-stage"><div class="relative w-full h-full flex items-center justify-center p-8"><div class="absolute inset-0 bg-indigo-50/50"></div><div class="flex -space-x-4 z-10"><div class="w-16 h-20 bg-white rounded-lg border shadow-lg transform -rotate-12 translate-y-4"><div class="w-6 h-2 bg-red-500 rounded-sm mb-2"></div><div class="h-1 w-full bg-slate-100 rounded mb-1"></div></div><div class="w-16 h-20 bg-white rounded-lg border shadow-xl z-10"><div class="w-6 h-2 bg-emerald-500 rounded-sm mb-2"></div><div class="h-1 w-full bg-slate-100 rounded mb-1"></div></div></div><div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-brand text-white px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest z-20"><i data-lucide="refresh-cw" class="w-2.5 h-2.5 animate-spin"></i> Reading Local Docs</div></div></div>
-        </div>
-        <div id="work-step-2" class="work-step-card">
-            <div class="work-step-content"><div class="eyebrow-pill">Step 02</div><h3 class="text-xl font-extrabold text-gray-900 leading-tight">Ask Anything Naturally</h3><p class="text-sm text-slate-500 mt-4 leading-relaxed">Type or speak complex multi-file intent — XeNo understands context.</p></div>
-            <div class="step-visual-stage"><div class="relative w-full h-full flex flex-col items-center justify-center p-8"><div class="w-full bg-white rounded-2xl border p-4 mb-4 z-10"><div class="flex items-center gap-2 mb-2"><i data-lucide="mic" class="w-3 h-3 text-brand"></i><span class="text-[9px] font-black text-brand uppercase font-black">Voice Query</span></div><p class="text-[10px] font-bold text-gray-900 leading-snug">"Compare Rome travel receipts with my Q3 budget Excel..."</p></div></div></div>
-        </div>
-        <div id="work-step-3" class="work-step-card">
-            <div class="work-step-content"><div class="eyebrow-pill">Step 03</div><h3 class="text-xl font-extrabold text-gray-900 leading-tight">Get Answers, Not File Hunts</h3><p class="text-sm text-slate-500 mt-4 leading-relaxed">XeNo gives you summaries and key insights instantly without manual digging.</p></div>
-            <div class="step-visual-stage"><div class="relative w-full h-full flex flex-col p-6 z-10"><div class="bg-white rounded-2xl shadow-xl border border-indigo-50 p-4"><div class="flex items-center gap-2 mb-3"><i data-lucide="sparkles" class="w-4 h-4 text-brand"></i><span class="text-[9px] font-black text-gray-900 uppercase">XeNo Response</span></div><div class="space-y-1 text-left"><div class="h-1.5 w-full bg-slate-100 rounded"></div><div class="h-1.5 w-4/5 bg-slate-100 rounded"></div></div></div></div></div>
-        </div>
-    </div>
-</section>
-
-
-<!-- TURNS FILES INTO ANSWERS (COLORFUL BG) -->
-<section class="section-py px-10 bg-gradient-to-br from-indigo-100/40 via-white to-pink-100/40 relative overflow-hidden">
-    <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
-        <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-brand/10 rounded-full blur-[120px]"></div>
-        <div class="absolute -bottom-48 -right-48 w-[600px] h-[600px] bg-brandLight/10 rounded-full blur-[120px]"></div>
-    </div>
-
-
-    <div class="max-w-7xl mx-auto relative z-10">
-        <div class="text-center mb-32"><div class="eyebrow-pill mx-auto">Intelligence</div><h2 class="h-section mb-6">How Xeno Turns Your Files Into Answers</h2><p class="sh-section max-w-2xl mx-auto">Xeno reads, understands, and connects your files locally — so you get answers in seconds, not searches.</p></div>
-
-        <div class="feature-row feature-row-reverse">
-            <div class="feature-text-block"><div class="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-brand mb-8"><i data-lucide="file-text" class="w-6 h-6"></i></div><h3 class="text-4xl font-black text-gray-900 mb-6">📄 Documents</h3><p class="text-xl text-slate-500 font-medium mb-10 leading-relaxed">Turns long files into usable knowledge.</p><ul class="space-y-6"><li class="flex items-start gap-4"><i data-lucide="check-circle" class="w-5 h-5 text-brand mt-1 shrink-0"></i><p class="text-gray-700 font-bold">Extracts key points and decisions</p></li><li class="flex items-start gap-4"><i data-lucide="check-circle" class="w-5 h-5 text-brand mt-1 shrink-0"></i><p class="text-gray-700 font-bold">Understands meaning beyond keywords</p></li></ul></div>
-            <div class="feature-visual-block p-10"><div class="flex flex-col gap-4 w-full"><div class="flex items-center gap-3 p-3 bg-white rounded-xl border shadow-sm"><div class="w-8 h-10 bg-red-500 rounded flex items-center justify-center text-white text-[8px] font-black">PDF</div><div class="h-2 w-24 bg-slate-100 rounded"></div></div><div class="space-y-3 pl-8"><div class="p-3 bg-white rounded-xl shadow-lg border transform rotate-1"><p class="text-[9px] font-bold">• Milestone delivery confirmed for June 15th.</p></div><div class="p-3 bg-white rounded-xl shadow-lg border transform -rotate-1"><p class="text-[9px] font-bold">• Budget reallocation reduces CAC by 15%.</p></div></div></div></div>
-        </div>
-
-
-        <div class="feature-row">
-            <div class="feature-text-block"><div class="w-12 h-12 rounded-2xl bg-brandLight/10 flex items-center justify-center text-brandLight mb-8"><i data-lucide="image" class="w-6 h-6"></i></div><h3 class="text-4xl font-black text-gray-900 mb-6">🖼 Images & Screenshots</h3><p class="text-xl text-slate-500 font-medium mb-10 leading-relaxed">Makes visuals searchable and useful.</p><ul class="space-y-6"><li class="flex items-start gap-4"><i data-lucide="check-circle" class="w-5 h-5 text-brandLight mt-1 shrink-0"></i><p class="text-gray-700 font-bold">Reads text from receipts, notes, and screenshots</p></li><li class="flex items-start gap-4"><i data-lucide="check-circle" class="w-5 h-5 text-brandLight mt-1 shrink-0"></i><p class="text-gray-700 font-bold">Recognizes content and context instantly</p></li></ul></div>
-            <div class="feature-visual-block p-10"><div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white"><img src="https://images.unsplash.com/photo-1554224155-1696413565d3?q=80&w=600" class="absolute inset-0 w-full h-full object-cover grayscale opacity-30"><div class="absolute inset-0 flex flex-col items-center justify-center p-8 gap-4"><div class="mt-4 px-6 py-2 bg-slate-900 text-white rounded-lg text-[10px] font-black uppercase tracking-widest">OCR Active: $12.40</div></div></div></div>
-        </div>
-
-
-        <div class="feature-row feature-row-reverse">
-            <div class="feature-text-block"><div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-8"><i data-lucide="table" class="w-6 h-6"></i></div><h3 class="text-4xl font-black text-gray-900 mb-6">📊 Spreadsheets</h3><p class="text-xl text-slate-500 font-medium mb-10 leading-relaxed">Turns rows and columns into clarity.</p><ul class="space-y-6"><li class="flex items-start gap-4"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 mt-1 shrink-0"></i><p class="text-gray-700 font-bold">Identifies trends, totals, and key figures</p></li></ul></div>
-            <div class="feature-visual-block p-10 bg-emerald-50/20"><div class="w-full bg-white rounded-2xl shadow-xl p-6 border border-emerald-50"><div class="flex items-center gap-2 mb-6"><div class="w-4 h-4 rounded-sm bg-emerald-500"></div><p class="text-[10px] font-black uppercase">Spending Insight</p></div><div class="flex items-end gap-3 h-24"><div class="w-full bg-emerald-500 rounded-t-lg h-full shadow-lg shadow-emerald-500/20"></div><div class="w-full bg-emerald-200 rounded-t-lg h-2/3"></div></div><div class="mt-4 pt-4 border-t border-slate-50 text-xs font-black">Total expenses: $2,450.00</div></div></div>
-        </div>
-
-
-        <div class="feature-row">
-            <div class="feature-text-block"><div class="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white mb-8"><i data-lucide="layers" class="w-6 h-6"></i></div><h3 class="text-4xl font-black text-gray-900 mb-6">🔗 Across All Files</h3><p class="text-xl text-slate-500 font-medium mb-10 leading-relaxed">Connects scattered information into one answer.</p><ul class="space-y-6"><li class="flex items-start gap-4"><i data-lucide="check-circle" class="w-5 h-5 text-brand mt-1 shrink-0"></i><p class="text-gray-700 font-bold">Pulls context from docs, notes, images, and sheets</p></li></ul></div>
-            <div class="feature-visual-block p-10"><div class="relative w-full h-full flex items-center justify-center"><div class="w-32 h-32 bg-brand rounded-full flex items-center justify-center text-white shadow-[0_0_60px_rgba(99,102,241,0.3)] z-10 animate-pulse"><i data-lucide="sparkles" class="w-12 h-12"></i></div><div class="absolute top-10 left-10 w-12 h-12 bg-white rounded-xl shadow-lg border flex items-center justify-center text-red-500"><i data-lucide="file-text" class="w-6 h-6"></i></div><div class="absolute bottom-10 right-10 w-12 h-12 bg-white rounded-xl shadow-lg border flex items-center justify-center text-emerald-500"><i data-lucide="table" class="w-6 h-6"></i></div></div></div>
-        </div>
-    </div>
-</section>
-
-
-<!-- WHO NEEDS XENO AI -->
-<section class="section-py bg-gradient-to-br from-[#fcfaff] via-white to-[#fffafc] overflow-hidden" id="personas">
-    <div class="max-w-7xl mx-auto px-10 mb-20 text-center">
-        <div class="eyebrow-pill mx-auto">Personas</div>
-        <h2 class="h-section mb-6">Who Needs XeNo AI</h2>
-        <p class="sh-section mx-auto max-w-2xl">Private, local intelligence designed for high-impact professionals and students.</p>
-    </div>
-
-    <div class="persona-carousel" id="persona-carousel">
-        <div class="persona-card focused">
-            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover" style="object-position: center 25%;">
-            <div class="absolute inset-0 bg-black/5"></div>
-            <div class="persona-content-box">
-                <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-brand"><i data-lucide="briefcase" class="w-5 h-5"></i></div><h4 class="text-2xl font-black">Professionals</h4></div>
-                <p class="text-lg font-bold text-gray-900 leading-snug">Walk into meetings already prepared.</p>
-                <div class="persona-ui-snippet"><div class="flex items-center justify-between mb-3 border-b pb-2"><span class="text-[9px] font-black uppercase text-brand">XeNo Recall</span><span class="text-[8px] text-slate-400">March 28, 2026</span></div><p class="text-[10px] font-bold">“Show me the client X notes from three weeks ago.”</p></div>
-            </div>
-        </div>
-        <div class="persona-card">
-            <img src="https://images.unsplash.com/photo-1523240715630-398b1b0ef093?q=80&w=1200&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover" style="object-position: center 20%;">
-            <div class="absolute inset-0 bg-black/5"></div>
-            <div class="persona-content-box">
-                <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-500"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div><h4 class="text-2xl font-black">Graduate Student</h4></div>
-                <p class="text-lg font-bold text-gray-900">Understand long reading in minutes.</p>
-                <div class="persona-ui-snippet"><p class="text-[10px] font-bold">“Summarize the fiscal policy paper from last Tuesday.”</p></div>
-            </div>
-        </div>
-    </div>
-    <div class="flex items-center justify-center gap-6 mt-12"><button onclick="scrollPersonas('prev')" class="w-14 h-14 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-all shadow-sm"><i data-lucide="arrow-left" class="w-6 h-6 text-slate-600"></i></button><button onclick="scrollPersonas('next')" class="w-14 h-14 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-all shadow-sm"><i data-lucide="arrow-right" class="w-6 h-6 text-slate-600"></i></button></div>
-</section>
-
-
-<!-- KEY CAPABILITIES -->
-<section id="capabilities" class="section-py px-10 bg-gradient-to-tr from-[#fcfaff] via-white to-[#fffafc]">
-    <div class="max-w-7xl mx-auto capabilities-grid">
-        <div class="sticky-col text-left">
-            <span class="eyebrow-pill">Capabilities</span>
-            <h2 class="text-5xl font-black text-gray-900 mb-8 leading-tight">Everything You Need to <br> Work Faster With Your Files</h2>
-            <p class="text-xl text-slate-500 font-medium max-w-sm">From instant search to smart organization, Xeno helps you act on information across all your files.</p>
-        </div>
-        <div class="scroll-col">
-            <div class="timeline-bar"></div>
-            <div class="cap-block"><div class="cap-num-icon"><i data-lucide="search" class="w-5 h-5"></i></div>
-                <div class="magic-card"><h4 class="text-2xl font-black text-gray-900 mb-2">Natural language search</h4><p class="text-base text-slate-500 mb-6 font-medium">Find files using everyday language.</p><div class="card-visual-box"><div class="p-4 bg-slate-50 rounded-xl border italic text-slate-600">"Where is that receipt from Rome?"</div></div></div>
-            </div>
-            <div class="cap-block"><div class="cap-num-icon"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
-                <div class="magic-card"><h4 class="text-2xl font-black text-gray-900 mb-2">Instant AI Summarization</h4><p class="text-base text-slate-500 mb-6 font-medium">Get core insights from long documents.</p><div class="card-visual-box" style="background:#F8F6FF;"><div class="w-4/5 flex flex-col gap-2"><div class="h-1.5 w-full bg-slate-100 rounded"></div><div class="h-1.5 w-2/3 bg-slate-100 rounded"></div></div></div></div>
-            </div>
-            <div class="cap-block"><div class="cap-num-icon"><i data-lucide="layers" class="w-5 h-5"></i></div>
-                <div class="magic-card"><h4 class="text-2xl font-black text-gray-900 mb-2">Context merging</h4><p class="text-base text-slate-500 mb-6 font-medium">Pull answers that require connecting dots between scattered files.</p></div>
-            </div>
-            <div class="cap-block"><div class="cap-num-icon"><i data-lucide="scan-text" class="w-5 h-5"></i></div>
-                <div class="magic-card"><h4 class="text-2xl font-black text-gray-900 mb-2">Image text extraction</h4><p class="text-base text-slate-500 mb-6 font-medium">Understand receipts and handwritten notes instantly.</p></div>
-            </div>
-            <div class="cap-block"><div class="cap-num-icon"><i data-lucide="grid" class="w-5 h-5"></i></div>
-                <div class="magic-card"><h4 class="text-2xl font-black text-gray-900 mb-2">Automatic organization</h4><p class="text-base text-slate-500 mb-6 font-medium">Sorted by AI into meaningful categories like trips and projects.</p></div>
+            <!-- Bottom Status -->
+            <div class="absolute bottom-6 right-6 bg-white/95 backdrop-blur-md text-slate-800 p-4 rounded-2xl shadow-xl flex items-center gap-4 z-20 border border-white/50 transition-all hover:scale-105">
+                <div class="p-2.5 rounded-xl text-white shadow-sm" style="background: linear-gradient(135deg, #468CFF, #FB76F9)"><i data-lucide="sparkles" class="w-[18px] h-[18px]"></i></div>
+                <div class="pr-1 text-left">
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">AI Intelligence</p>
+                    <p class="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-500">Cross-platform Retrieval</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 
-<!-- ARCHITECTURE -->
-<section id="architecture" class="section-py px-10 bg-black text-white relative overflow-hidden">
-    <div class="arch-glow"></div>
-    <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20 items-center relative z-10">
-        <div><span class="v-badge mb-10 tracking-[0.2em]">Architecture</span><h2 class="text-5xl font-extrabold mb-16 leading-tight">Your Knowledge Never Leaves Your Device</h2><div class="space-y-16"><div><h4 class="text-xl font-bold mb-4 flex items-center gap-3"><div class="w-1 h-6 bg-brand rounded-full"></div> On-Device Intelligence</h4><p class="text-slate-400 text-lg leading-relaxed max-w-md">XeNo runs on your local hardware. Computation happens strictly inside your device. Your phone is the brain.</p></div><div><h4 class="text-xl font-bold mb-4 flex items-center gap-3"><div class="w-1 h-6 bg-brand rounded-full"></div> The No-Cloud Guarantee</h4><p class="text-slate-400 text-lg leading-relaxed max-w-md">We built XeNo without a central server. Your files are never uploaded.</p></div></div></div>
-        <div class="flex justify-center items-center"><div class="relative"><div class="w-[300px] h-[300px] rounded-full border border-white/10 flex items-center justify-center shadow-[0_0_80px_rgba(99,102,241,0.15)]"><i data-lucide="shield" class="w-24 h-24 text-brand"></i></div></div></div>
+<!-- FORMAT STRIP -->
+<section class="bg-white/30 py-12 border-t border-slate-100/50">
+    <div class="max-w-5xl mx-auto px-8 text-center flex flex-wrap justify-center gap-12 opacity-[0.25] grayscale">
+        <div class="text-sm font-extrabold tracking-[0.3em] text-slate-600">PDF</div>
+        <div class="text-sm font-extrabold tracking-[0.3em] text-slate-600">DOCX</div>
+        <div class="text-sm font-extrabold tracking-[0.3em] text-slate-600">PNG</div>
+        <div class="text-sm font-extrabold tracking-[0.3em] text-slate-600">JPG</div>
+        <div class="text-sm font-extrabold tracking-[0.3em] text-slate-600">TXT</div>
     </div>
 </section>
 
 
-<!-- TESTIMONIALS (HORIZONTAL SCROLL) -->
-<section class="section-py px-10 bg-gradient-to-tr from-[#fcfaff] via-white to-[#fffafc]">
-    <div class="max-w-7xl mx-auto text-center mb-20">
-        <div class="eyebrow-pill mx-auto">Testimonials</div>
-        <h2 class="h-section mb-6">What They Say About XeNo AI?</h2>
+<!-- HOW IT WORKS SECTION -->
+<section id="flow-section" class="py-24 px-4 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto text-center relative w-full">
+        <h2 class="text-[36px] font-bold tracking-tight text-slate-900 mb-20">How XeNo Works</h2>
+
+
+        <div class="hidden md:block absolute top-[62%] left-0 w-full h-[2px] z-0 pointer-events-none">
+            <svg width="100%" height="20" viewBox="0 0 1000 20" fill="none" preserveAspectRatio="none" class="overflow-visible">
+                <path d="M166 10H833" stroke="#E2E8F0" stroke-width="2" stroke-dasharray="6 6" />
+                <path id="flow-progress-line" d="M166 10H833" stroke="url(#flowGradient)" stroke-width="4" stroke-linecap="round" class="flow-line-path" style="stroke-dasharray: 80 1000; stroke-dashoffset: 900;" />
+                <defs>
+                    <linearGradient id="flowGradient" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#468CFF" stop-opacity="0" />
+                        <stop offset="50%" stop-color="#468CFF" />
+                        <stop offset="100%" stop-color="#FB76F9" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+
+        <div class="grid md:grid-cols-3 gap-8 relative z-10" id="flow-cards">
+            <!-- Card 1 -->
+            <div class="flow-card p-1 rounded-[2.2rem] transition-all duration-500 cursor-pointer bg-gradient-to-br from-[#468CFF]/50 to-[#FB76F9]/50 shadow-2xl scale-[1.02]" data-step="0">
+                <div class="bg-white border border-slate-100 p-8 rounded-[2rem] h-full flex flex-col text-left">
+                    <div class="mb-6">
+                        <div class="step-tag text-[9px] font-bold uppercase tracking-widest mb-3 px-2 py-1 rounded-md inline-block bg-blue-500 text-white shadow-md">Step 01</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Contextualize</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed">XeNo indexes and deeply understands the data hierarchy within your local files.</p>
+                    </div>
+                    <div class="bg-slate-50/50 rounded-2xl p-6 border border-slate-100 flex items-center justify-center relative h-36 overflow-hidden mt-auto">
+                        <i data-lucide="file-spreadsheet" class="text-green-500 absolute transition-all rotate-0 scale-110 w-8 h-8"></i>
+                        <i data-lucide="file-text" class="text-blue-500 absolute transition-all rotate-0 scale-110 w-8 h-8"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="flow-card p-1 rounded-[2.2rem] transition-all duration-500 cursor-pointer bg-transparent hover:bg-white/40" data-step="1">
+                <div class="bg-white border border-slate-100 p-8 rounded-[2rem] h-full flex flex-col text-left">
+                    <div class="mb-6">
+                        <div class="step-tag text-[9px] font-bold uppercase tracking-widest mb-3 px-2 py-1 rounded-md inline-block bg-slate-100 text-slate-400">Step 02</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Ask Naturally</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed">Query your library using natural language. XeNo correlates data across formats.</p>
+                    </div>
+                    <div class="bg-slate-50/50 rounded-2xl p-6 border border-slate-100 flex items-center justify-center relative h-36 overflow-hidden mt-auto">
+                        <div class="bg-white p-4 rounded-2xl shadow-xl border w-full relative">
+                            <div class="flex gap-2 mb-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div><div class="h-2 w-full bg-slate-100 rounded-full"></div></div>
+                            <i data-lucide="mic" class="absolute -right-2 -bottom-2 w-8 h-8 rounded-full p-1.5 bg-blue-500 text-white transition-all scale-0"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="flow-card p-1 rounded-[2.2rem] transition-all duration-500 cursor-pointer bg-transparent hover:bg-white/40" data-step="2">
+                <div class="bg-white border border-slate-100 p-8 rounded-[2rem] h-full flex flex-col text-left">
+                    <div class="mb-6">
+                        <div class="step-tag text-[9px] font-bold uppercase tracking-widest mb-3 px-2 py-1 rounded-md inline-block bg-slate-100 text-slate-400">Step 03</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Instant Insights</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed">Turn raw files into formatted reports, summaries, and takeaways.</p>
+                    </div>
+                    <div class="bg-slate-50/50 rounded-2xl p-6 border border-slate-100 flex items-center justify-center relative h-36 overflow-hidden mt-auto">
+                        <div class="space-y-3 w-full">
+                            <div class="flex gap-2 p-2 bg-white rounded-xl shadow-sm"><div class="w-4 h-4 rounded bg-slate-100"></div><div class="h-1.5 w-1/2 bg-slate-50 rounded-full mt-1.5"></div></div>
+                            <div class="flex gap-2 p-2 bg-white rounded-xl shadow-sm"><div class="w-4 h-4 rounded bg-slate-100"></div><div class="h-1.5 w-1/2 bg-slate-50 rounded-full mt-1.5"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="testimonial-carousel" id="testimonial-carousel">
-        <div class="t-scroller-card p-10 bg-white shadow-xl">
-            <div><div class="t-quote-symbol">“</div><h4 class="text-xl font-black text-gray-900 mb-4">The best analyzer with AI</h4><p class="text-slate-500 font-medium leading-relaxed">Truly helpful. I love how many features it has in addition to the AI capabilities.</p></div>
-            <div class="flex items-center gap-3 mt-10"><div class="w-10 h-10 rounded-full bg-slate-200"></div><span class="text-sm font-bold">Mark T.</span></div>
-        </div>
-        <div class="t-scroller-card p-10 bg-white shadow-xl">
-            <div><div class="t-quote-symbol">“</div><h4 class="text-xl font-black text-gray-900 mb-4">Great Adobe alternative</h4><p class="text-slate-500 font-medium leading-relaxed">Decided to go with XeNo due to its advanced local AI features and seamless integration.</p></div>
-            <div class="flex items-center gap-3 mt-10"><div class="w-10 h-10 rounded-full bg-slate-200"></div><span class="text-sm font-bold">Intan P.</span></div>
-        </div>
-        <div class="t-scroller-card p-10 bg-white shadow-xl">
-            <div><div class="t-quote-symbol">“</div><h4 class="text-xl font-black text-gray-900 mb-4">Powerful and Private</h4><p class="text-slate-500 font-medium leading-relaxed">XeNo is the only solution that combines advanced local AI with speed. It's truly privacy-first.</p></div>
-            <div class="flex items-center gap-3 mt-10"><div class="w-10 h-10 rounded-full bg-slate-200"></div><span class="text-sm font-bold">Andrew K.</span></div>
-        </div>
-    </div>
-    <div class="flex items-center justify-center gap-6 mt-12"><button onclick="scrollTestimonials('prev')" class="w-14 h-14 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-all shadow-sm"><i data-lucide="arrow-left" class="w-6 h-6 text-slate-600"></i></button><button onclick="scrollTestimonials('next')" class="w-14 h-14 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-all shadow-sm"><i data-lucide="arrow-right" class="w-6 h-6 text-slate-600"></i></button></div>
 </section>
 
 
-<!-- FAQ SECTION (ACCORDION) -->
-<section class="section-py px-10 bg-gradient-to-tr from-[#fcfaff] via-white to-[#fffafc] border-t border-slate-50">
-    <div class="max-w-4xl mx-auto">
-        <h2 class="text-5xl font-black text-gray-900 mb-16 text-center">FAQs about XeNo AI</h2>
-        <div class="space-y-4 text-left">
-            <div class="faq-item active" onclick="this.classList.toggle('active')">
-                <div class="flex items-center justify-between"><h4 class="text-xl font-bold">How does XeNo keep my data private?</h4><i data-lucide="plus" class="faq-plus w-6 h-6"></i></div>
-                <div class="faq-answer"><p class="text-slate-500 leading-relaxed font-medium">XeNo processes all files strictly on your local hardware. No data is ever uploaded to a central server or used for training cloud models.</p></div>
+<!-- INTELLIGENCE FEATURES -->
+<section class="py-24 px-4 relative max-w-7xl mx-auto space-y-32">
+    <div class="text-center">
+        <h2 class="text-[36px] font-bold tracking-tight text-slate-900 mb-6">How XeNo Turns Your Files Into Answers</h2>
+        <p class="text-slate-500 text-[20px] max-w-2xl mx-auto leading-relaxed">XeNo reads, understands, and connects your files locally — so you get answers in seconds, not searches.</p>
+    </div>
+
+
+    <!-- Section 1 -->
+    <div class="grid md:grid-cols-2 gap-16 items-center py-20">
+        <div class="space-y-8">
+            <div class="space-y-4">
+                <div class="w-12 h-12 rounded-2xl bg-white shadow-lg border border-slate-100 flex items-center justify-center text-blue-500"><i data-lucide="file-text"></i></div>
+                <h3 class="text-[36px] font-bold text-slate-900 tracking-tight leading-tight">Documents</h3>
+                <p class="text-slate-500 text-lg leading-relaxed">Turns long files into usable knowledge.</p>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('active')">
-                <div class="flex items-center justify-between"><h4 class="text-xl font-bold">What file types are supported?</h4><i data-lucide="plus" class="faq-plus w-6 h-6"></i></div>
-                <div class="faq-answer"><p class="text-slate-500 leading-relaxed font-medium">XeNo supports PDFs, Microsoft Word (DOCX), Excel (XLSX), and all major image formats (JPG, PNG) for search and OCR extraction.</p></div>
+            <div class="space-y-5">
+                <div class="flex items-start gap-4"><div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i></div><span class="font-semibold text-slate-700 text-lg leading-snug">Extracts text from documents and scanned files</span></div>
+                <div class="flex items-start gap-4"><div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i></div><span class="font-semibold text-slate-700 text-lg leading-snug">Breaks content into meaningful sections for understanding</span></div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('active')">
-                <div class="flex items-center justify-between"><h4 class="text-xl font-bold">Is there a limit to the number of files I can index?</h4><i data-lucide="plus" class="faq-plus w-6 h-6"></i></div>
-                <div class="faq-answer"><p class="text-slate-500 leading-relaxed font-medium">There is no software-imposed limit. XeNo is limited only by the available storage space on your device.</p></div>
+        </div>
+        <div class="relative group">
+            <div class="absolute inset-0 bg-blue-400/5 blur-[100px] -z-10 rounded-full scale-75"></div>
+            <div class="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-white flex items-center justify-center relative overflow-hidden min-h-[400px]">
+                <div class="w-full space-y-6 relative text-left">
+                    <div class="bg-white p-5 rounded-3xl shadow-xl border border-slate-100 flex items-center gap-4"><div class="w-12 h-12 rounded-xl bg-red-500 text-white flex items-center justify-center font-bold text-xs">PDF</div><div class="flex-1 space-y-2"><div class="h-2 w-32 bg-slate-100 rounded-full"></div><div class="h-1.5 w-16 bg-slate-50 rounded-full"></div></div></div>
+                    <div class="space-y-4 pt-4 ml-6 relative">
+                        <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-slate-100 -translate-x-6"></div>
+                        <div class="bg-white p-4 rounded-2xl shadow-md border border-slate-100 flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div><p class="text-xs font-semibold text-slate-600">Key milestone identified: June 15th</p></div>
+                    </div>
+                </div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('active')">
-                <div class="flex items-center justify-between"><h4 class="text-xl font-bold">Do I need an internet connection?</h4><i data-lucide="plus" class="faq-plus w-6 h-6"></i></div>
-                <div class="faq-answer"><p class="text-slate-500 leading-relaxed font-medium">No. All AI processing, searching, and organizing happens entirely offline on your local device.</p></div>
+        </div>
+    </div>
+
+
+    <!-- Section 2: Reversed -->
+    <div class="grid md:grid-cols-2 gap-16 items-center py-20">
+        <div class="space-y-8 md:order-2">
+            <div class="space-y-4">
+                <div class="w-12 h-12 rounded-2xl bg-white shadow-lg border border-slate-100 flex items-center justify-center text-blue-500"><i data-lucide="file-spreadsheet"></i></div>
+                <h3 class="text-[36px] font-bold text-slate-900 tracking-tight leading-tight">Spreadsheets</h3>
+                <p class="text-slate-500 text-lg leading-relaxed">Analyzes complex data grids in real-time.</p>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('active')">
-                <div class="flex items-center justify-between"><h4 class="text-xl font-bold">Is there a mobile version available?</h4><i data-lucide="plus" class="faq-plus w-6 h-6"></i></div>
-                <div class="faq-answer"><p class="text-slate-500 leading-relaxed font-medium">Yes. XeNo is available for iOS, Android, macOS, and Windows with local-first security.</p></div>
+            <div class="space-y-5">
+                <div class="flex items-start gap-4"><div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i></div><span class="font-semibold text-slate-700 text-lg leading-snug">Reads tables, numbers, and structured data</span></div>
+                <div class="flex items-start gap-4"><div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i></div><span class="font-semibold text-slate-700 text-lg leading-snug">Turns raw sheets into searchable insights</span></div>
+            </div>
+        </div>
+        <div class="relative group md:order-1">
+            <div class="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-white flex items-center justify-center relative overflow-hidden min-h-[400px]">
+                <div class="w-full space-y-6 relative text-left">
+                    <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                        <div class="bg-slate-50 px-4 py-2 border-b flex gap-1.5"><div class="w-2 h-2 rounded-full bg-slate-200"></div><div class="w-2 h-2 rounded-full bg-slate-200"></div></div>
+                        <div class="p-4 grid grid-cols-3 gap-2">
+                            <div class="h-6 bg-slate-50 rounded animate-pulse"></div>
+                            <div class="h-6 bg-slate-50 rounded animate-pulse" style="animation-delay: 200ms"></div>
+                            <div class="h-6 bg-slate-50 rounded animate-pulse" style="animation-delay: 400ms"></div>
+                        </div>
+                    </div>
+                    <div class="bg-blue-600 text-white p-4 rounded-2xl shadow-2xl flex items-center gap-4 translate-x-8 -translate-y-4">
+                        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                        <div><p class="text-[10px] font-bold uppercase opacity-60">Insight found</p><p class="text-xs font-bold">Revenue growth +14% QoQ</p></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 
-<!-- FINAL CTA SECTION (MIDNIGHT INDIGO) -->
-<section class="section-py px-10 bg-midnight text-white text-center">
-    <div class="max-w-4xl mx-auto">
-        <h2 class="text-5xl font-black mb-10 leading-tight">Ready to stop searching and <span class="brand-accent">start knowing?</span></h2>
-        <p class="text-slate-400 text-lg mb-14 font-medium">Join thousands of professionals building their private digital memory with XeNo.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <button class="w-full sm:w-auto px-12 py-5 rounded-full bg-brand text-white font-bold text-lg hover:bg-brandLight transition-all shadow-2xl">Download for Free</button>
-            <button class="w-full sm:w-auto px-12 py-5 rounded-full border border-white/20 text-white font-bold text-lg hover:bg-white/5 transition-all">Talk to Sales</button>
+<!-- PERSONAS SECTION -->
+<section class="py-24 px-4 bg-white/30 border-t border-white/50 overflow-hidden text-center">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-[36px] font-bold tracking-tight text-slate-900 mb-6">Who Needs XeNo AI</h2>
+        <p class="text-slate-500 text-lg max-w-2xl mx-auto mb-16 leading-relaxed">XeNo is for professionals, students, and creators who hate manual sifting.</p>
+
+
+        <div class="relative">
+            <div id="persona-carousel" class="flex gap-8 overflow-x-auto pb-12 snap-x snap-mandatory no-scrollbar scroll-smooth">
+                <!-- Cards will be rendered by JS for cleaner structure -->
+            </div>
+            <div class="flex justify-center gap-4 mt-8">
+                <button id="scroll-left" class="w-12 h-12 rounded-full bg-white shadow-lg border border-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-colors"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <button id="scroll-right" class="w-12 h-12 rounded-full bg-white shadow-lg border border-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-colors"><i data-lucide="arrow-right" class="w-5 h-5"></i></button>
+            </div>
         </div>
     </div>
 </section>
-
-
-<!-- MODERN FOOTER -->
-<footer class="bg-white border-t border-slate-100 py-24 px-10">
-    <div class="max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-16 text-left">
-        <div class="col-span-2">
-            <div class="flex items-center gap-3 mb-8">
-                <div class="w-8 h-8 bg-brand rounded-full items-center justify-center flex"><div class="w-4 h-4 bg-white rounded-sm rotate-45"></div></div>
-                <span class="text-2xl font-black tracking-tighter uppercase text-black">XeNo</span>
-            </div>
-            <p class="text-slate-500 font-medium max-w-xs leading-relaxed mb-8">The world's most private AI assistant. Designed to unlock the power of your local files without the cloud.</p>
-            <div class="flex items-center gap-6">
-                <a href="#" class="text-slate-400 hover:text-brand transition-colors"><i data-lucide="twitter" class="w-6 h-6"></i></a>
-                <a href="#" class="text-slate-400 hover:text-brand transition-colors"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                <a href="#" class="text-slate-400 hover:text-brand transition-colors"><i data-lucide="github" class="w-6 h-6"></i></a>
-            </div>
-        </div>
-        <div>
-            <h5 class="text-black font-bold uppercase text-xs tracking-widest mb-8">Product</h5>
-            <ul class="space-y-4">
-                <li><a href="#" class="text-slate-500 font-medium hover:text-brand transition-all">Features</a></li>
-                <li><a href="#" class="text-slate-500 font-medium hover:text-brand transition-all">Pricing</a></li>
-            </ul>
-        </div>
-        <div>
-            <h5 class="text-black font-bold uppercase text-xs tracking-widest mb-8">Resources</h5>
-            <ul class="space-y-4">
-                <li><a href="#" class="text-slate-500 font-medium hover:text-brand transition-all">Help Center</a></li>
-                <li><a href="#" class="text-slate-500 font-medium hover:text-brand transition-all">Privacy Policy</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="max-w-[1400px] mx-auto pt-12 border-t border-slate-50 text-center">
-        <p class="text-sm font-medium text-slate-400">© 2026 XeNo AI Technology. All rights reserved.</p>
-    </div>
-</footer>
 
 
 <script>
+    // Initialize Lucide
     lucide.createIcons();
-    const carousel = document.getElementById('persona-carousel');
-    carousel.addEventListener('scroll', () => {
-        const cards = document.querySelectorAll('.persona-card');
-        const centerX = carousel.scrollLeft + carousel.offsetWidth / 2;
-        cards.forEach(card => {
-            if (Math.abs(centerX - (card.offsetLeft + card.offsetWidth / 2)) < 300) card.classList.add('focused');
-            else card.classList.remove('focused');
+
+
+    // --- HERO ANIMATION LOGIC ---
+    const heroSteps = [
+        { id: 'listening', text: 'Ask XeNo anything...' },
+        { id: 'listening', text: 'Xeno, What was the Q3 marketing spend breakdown?' },
+        { id: 'analyzing', text: 'Analyzing Sources...' },
+        { id: 'results-docs', text: 'Found 3 relevant files' },
+        { id: 'results-docs', text: 'Ask XeNo anything...' },
+        { id: 'listening', text: 'Ask XeNo anything...' },
+        { id: 'listening', text: 'Xeno find pictures of dog' },
+        { id: 'analyzing', text: 'Indexing Photos...' },
+        { id: 'results-photos', text: 'Found relevant images' },
+        { id: 'results-photos', text: 'Ask XeNo anything...' }
+    ];
+
+
+    let currentHeroStep = 0;
+    const typewriterEl = document.getElementById('typewriter-container');
+    const heroStageParts = {
+        'listening': document.getElementById('step-listening'),
+        'analyzing': document.getElementById('step-analyzing'),
+        'results-docs': document.getElementById('step-results-docs'),
+        'results-photos': document.getElementById('step-results-photos')
+    };
+
+
+    function updateHeroUI(stepIndex) {
+        const step = heroSteps[stepIndex];
+
+        // Handle analysis text change
+        if(stepIndex === 7) document.getElementById('analysis-text').innerText = 'Indexing Photos...';
+        if(stepIndex === 2) document.getElementById('analysis-text').innerText = 'Analyzing Sources...';
+
+
+        // Switch steps visibility
+        Object.keys(heroStageParts).forEach(key => {
+            const el = heroStageParts[key];
+            if (key === step.id) {
+                el.classList.add('active');
+                setTimeout(() => el.style.opacity = '1', 50);
+            } else {
+                el.style.opacity = '0';
+                setTimeout(() => el.classList.remove('active'), 500);
+            }
+        });
+
+
+        // Trigger typewriter if text changed
+        if (stepIndex === 1 || stepIndex === 6) {
+            runTypewriter(step.text);
+        } else {
+            typewriterEl.innerText = step.text;
+        }
+    }
+
+
+    function runTypewriter(text) {
+        typewriterEl.innerText = "";
+        let i = 0;
+        const timer = setInterval(() => {
+            if (i < text.length) {
+                typewriterEl.innerText += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(timer);
+            }
+        }, 40);
+    }
+
+
+    // Generate Audio Wave Bars
+    const waveContainer = document.getElementById('audio-wave');
+    for (let i = 0; i < 12; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'w-1 rounded-full animate-wave';
+        bar.style.height = `${20 + Math.random() * 80}%`;
+        bar.style.animationDelay = `${i * 0.08}s`;
+        bar.style.background = i % 2 === 0 ? '#468CFF' : '#FB76F9';
+        waveContainer.appendChild(bar);
+    }
+
+
+    // --- FLOW (HOW IT WORKS) LOGIC ---
+    let currentFlowStep = 0;
+    let flowAutoPlay = true;
+    const flowLine = document.getElementById('flow-progress-line');
+    const flowCards = document.querySelectorAll('.flow-card');
+    const flowOffsets = ['900', '500', '100'];
+
+
+    function updateFlowUI(step) {
+        currentFlowStep = step;
+        flowLine.style.strokeDashoffset = flowOffsets[step];
+
+        flowCards.forEach((card, idx) => {
+            const tag = card.querySelector('.step-tag');
+            const micIcon = card.querySelector('[data-lucide="mic"]');
+
+            if (idx === step) {
+                card.classList.add('bg-gradient-to-br', 'from-[#468CFF]/50', 'to-[#FB76F9]/50', 'shadow-2xl', 'scale-[1.02]');
+                card.classList.remove('bg-transparent', 'hover:bg-white/40');
+                tag.classList.add('bg-blue-500', 'text-white', 'shadow-md');
+                tag.classList.remove('bg-slate-100', 'text-slate-400');
+                if(micIcon) micIcon.style.transform = 'scale(1.1)';
+            } else {
+                card.classList.remove('bg-gradient-to-br', 'from-[#468CFF]/50', 'to-[#FB76F9]/50', 'shadow-2xl', 'scale-[1.02]');
+                card.classList.add('bg-transparent', 'hover:bg-white/40');
+                tag.classList.remove('bg-blue-500', 'text-white', 'shadow-md');
+                tag.classList.add('bg-slate-100', 'text-slate-400');
+                if(micIcon) micIcon.style.transform = 'scale(0)';
+            }
+        });
+    }
+
+
+    flowCards.forEach(card => {
+        card.addEventListener('click', () => {
+            flowAutoPlay = false;
+            updateFlowUI(parseInt(card.dataset.step));
+            setTimeout(() => flowAutoPlay = true, 8000);
         });
     });
 
 
-    const tCarousel = document.getElementById('testimonial-carousel');
-    function scrollTestimonials(dir) { tCarousel.scrollBy({ left: dir === 'next' ? 400 : -400, behavior: 'smooth' }); }
-    function scrollPersonas(dir) { carousel.scrollBy({ left: dir === 'next' ? 600 : -600, behavior: 'smooth' }); }
-
-
-    let currentWorkStep = 1;
-    let isHoveringWorkSteps = false;
-    function cycleWorkSteps() {
-        if (isHoveringWorkSteps) return;
-        const cards = document.querySelectorAll('.work-step-card');
-        const arrows = document.querySelectorAll('.step-arrow-line-wrapper');
-        cards.forEach(c => c.classList.remove('active'));
-        arrows.forEach(a => a.classList.remove('active-arrow'));
-        const activeCard = document.getElementById(`work-step-${currentWorkStep}`);
-        if(activeCard) activeCard.classList.add('active');
-        if(currentWorkStep < 3) {
-            const arrow = document.querySelector(`.sa-${currentWorkStep}`);
-            if(arrow) arrow.classList.add('active-arrow');
-        }
-        currentWorkStep = currentWorkStep === 3 ? 1 : currentWorkStep + 1;
-    }
-    const workContainer = document.getElementById('work-steps-container');
-    if (workContainer) {
-        workContainer.addEventListener('mouseenter', () => isHoveringWorkSteps = true);
-        workContainer.addEventListener('mouseleave', () => isHoveringWorkSteps = false);
-    }
-    setInterval(cycleWorkSteps, 5000);
-    cycleWorkSteps();
-
-
-    // Hero Typewriter Logic
-    const typewriterContent = [
-        { prefix: "Ask about ", text: "italy trip photos...", contextId: "grid-italy" },
-        { prefix: "Ask about ", text: "the client proposal...", contextId: "grid-other" },
-        { prefix: "Ask me about ", text: "last month's bank statement...", contextId: "grid-bank" }
+    // --- PERSONA CAROUSEL ---
+    const personas = [
+        { title: "Professionals", tagline: "Walk into meetings already prepared.", image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200", query: "Show me client X notes from 3 weeks ago.", type: "RECALL", icon: "briefcase" },
+        { title: "Grad Students", tagline: "Understand long reading in minutes.", image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=1200", query: "Summarize the fiscal policy paper from last Tuesday.", type: "SUMMARY", icon: "graduation-cap" },
+        { title: "Creators", tagline: "Turn hours of research into scripts.", image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1200", query: "Find b-roll descriptions from script v2.", type: "KNOWLEDGE", icon: "clapperboard" }
     ];
-    let contentIndex = 0, charIndex = 0, isDeleting = false;
-    function type() {
-        const currentObj = typewriterContent[contentIndex];
-        document.querySelectorAll('.dynamic-file-text-el').forEach(el => el.textContent = currentObj.text.substring(0, charIndex));
-        document.querySelectorAll('.static-prefix-el').forEach(el => el.textContent = currentObj.prefix);
-        const activeGrid = document.getElementById(currentObj.contextId);
-        if (activeGrid) {
-            if (!isDeleting && charIndex > 5) activeGrid.classList.add('active');
-            else if (isDeleting && charIndex < 3) activeGrid.classList.remove('active');
-        }
-        if (!isDeleting) {
-            charIndex++;
-            if (charIndex > currentObj.text.length) { isDeleting = true; setTimeout(type, 3500); return; }
-        } else {
-            charIndex--;
-            if (charIndex === 0) { isDeleting = false; if(activeGrid) activeGrid.classList.remove('active'); contentIndex = (contentIndex + 1) % typewriterContent.length; }
-        }
-        setTimeout(type, isDeleting ? 25 : 55);
-    }
-    window.onload = () => { type(); }
 
 
-    window.addEventListener('scroll', () => {
-        const nav = document.getElementById('navbar');
-        if (window.scrollY > 40) { nav.classList.add('bg-white/90', 'backdrop-blur-md', 'py-4', 'shadow-sm'); }
-        else { nav.classList.remove('bg-white/90', 'backdrop-blur-md', 'py-4', 'shadow-sm'); }
+    const carousel = document.getElementById('persona-carousel');
+    personas.forEach(p => {
+        const card = document.createElement('div');
+        card.className = "min-w-[85vw] md:min-w-[600px] aspect-[16/9] rounded-[2.5rem] overflow-hidden relative snap-center shadow-2xl border border-white/20 flex-shrink-0";
+        card.innerHTML = `
+                <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                <div class="absolute top-8 left-8 bg-white/90 backdrop-blur-xl p-8 rounded-[2rem] shadow-2xl max-w-[80%] border border-white/50 text-left">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 bg-blue-50 rounded-xl text-blue-500"><i data-lucide="${p.icon}" class="w-5 h-5"></i></div>
+                        <h4 class="text-xl font-bold text-slate-900">${p.title}</h4>
+                    </div>
+                    <p class="text-slate-600 font-semibold text-lg mb-6 leading-tight">${p.tagline}</p>
+                    <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200/50 flex flex-col gap-2">
+                        <div class="flex justify-between items-center opacity-60">
+                            <span class="text-[9px] font-bold text-blue-500 uppercase tracking-widest">XeNo ${p.type}</span>
+                            <span class="text-[9px] text-slate-400">Recall Active</span>
+                        </div>
+                        <p class="text-[11px] font-bold text-slate-700 italic">"${p.query}"</p>
+                    </div>
+                </div>
+            `;
+        carousel.appendChild(card);
     });
+    lucide.createIcons();
+
+
+    document.getElementById('scroll-left').onclick = () => carousel.scrollBy({ left: -400, behavior: 'smooth' });
+    document.getElementById('scroll-right').onclick = () => carousel.scrollBy({ left: 400, behavior: 'smooth' });
+
+
+    // --- GLOBAL TIMERS ---
+    window.onload = () => {
+        // Hero Observer
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                setInterval(() => {
+                    currentHeroStep = (currentHeroStep + 1) % heroSteps.length;
+                    updateHeroUI(currentHeroStep);
+                }, 3500);
+                observer.disconnect();
+            }
+        }, { threshold: 0.1 });
+        observer.observe(document.getElementById('hero-section'));
+
+
+        // Flow Auto-play
+        setInterval(() => {
+            if (flowAutoPlay) {
+                currentFlowStep = (currentFlowStep + 1) % 3;
+                updateFlowUI(currentFlowStep);
+            }
+        }, 4000);
+    };
 </script>
 </body>
 </html>
