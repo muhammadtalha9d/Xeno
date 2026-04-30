@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XeNo AI - Your Personal AI Assistant</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background: #fff; }
+
 
         @keyframes gradient-xy {
             0%, 100% { background-position: 0% 50%; }
@@ -22,519 +22,233 @@
 
         @keyframes wave {
             0%, 100% { transform: scaleY(0.6); opacity: 0.5; }
-            50% { transform: scaleY(1.4); opacity: 1; }
+            50% { transform: scaleY(1.3); opacity: 1; }
         }
         .animate-wave {
             animation: wave 0.8s ease-in-out infinite;
         }
 
 
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-
-        .transition-all { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-
-        .hero-step { display: none; }
-        .hero-step.active { display: flex; }
-
-        .flow-line-path {
-            transition: stroke-dashoffset 1s ease-in-out;
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
+
+
+        .loading-bar-container {
+            width: 200px;
+            height: 4px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .loading-bar-progress {
+            height: 100%;
+            background: linear-gradient(to right, #468CFF, #FB76F9);
+            width: 0%;
+            animation: progress-grow 2s ease-in-out forwards;
+        }
+        @keyframes progress-grow { to { width: 100%; } }
     </style>
 </head>
-<body class="min-h-screen text-slate-900 overflow-x-hidden relative pb-20">
+<body class="overflow-x-hidden relative">
 
 
-<!-- GLOBAL BACKGROUND DEPTH -->
-<div class="fixed inset-0 -z-10 opacity-[0.20]" style="background: linear-gradient(145deg, #FFFFFF 20%, #468CFF 45%, #FB76F9 75%, #FFFFFF 100%); filter: blur(120px);"></div>
-
-
-<!-- NAVIGATION -->
-<nav class="flex items-center justify-between px-8 py-4 max-w-7xl mx-auto backdrop-blur-md sticky top-0 z-50">
-    <div class="flex items-center gap-8">
-        <div class="flex items-center gap-1 font-bold text-2xl tracking-tighter">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white" style="background: linear-gradient(to bottom right, #468CFF, #FB76F9)">X</div>
-            <span>XeNo</span>
-        </div>
-        <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
-            <a href="#" class="hover:text-black transition-colors">Pricing</a>
-            <a href="#" class="hover:text-black transition-colors">Security</a>
-            <button class="flex items-center gap-1 hover:text-black transition-colors">How it works <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
-            <button class="flex items-center gap-1 hover:text-black transition-colors">For teams <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
-            <button class="flex items-center gap-1 hover:text-black transition-colors">Customer stories <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
-        </div>
+    <!-- Hero Background Blur -->
+    <div class="fixed inset-0 -z-10 opacity-[0.20] pointer-events-none"
+         style="background: linear-gradient(145deg, #FFFFFF 20%, #468CFF 45%, #FB76F9 75%, #FFFFFF 100%); filter: blur(120px);">
     </div>
-    <div class="flex items-center">
-        <button class="flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white rounded-full transition-all shadow-lg hover:scale-105 active:scale-95" style="background: linear-gradient(135deg, #468CFF, #FB76F9)">
-            <i data-lucide="download" class="w-4 h-4" stroke-width="3"></i> Download the App
+
+
+    <!-- HERO SECTION -->
+    <section class="pt-20 pb-24 px-4 text-center max-w-5xl mx-auto">
+        <h1 class="text-[48px] font-bold tracking-tight mb-6 text-slate-900 leading-[1.15]">
+            Your Personal AI Assistant <br />
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#468CFF] to-[#FB76F9]">For All Your Files</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 mb-12 leading-relaxed font-medium">
+            XeNo interprets your PDFs, documents, and photos and turns them into instant answers, summaries, and insights.
+        </p>
+        <button class="flex items-center gap-3 px-10 py-5 text-lg font-bold text-white rounded-2xl transition-all shadow-2xl hover:scale-105 active:scale-95 mx-auto mb-16 bg-gradient-to-r from-[#468CFF] to-[#FB76F9] hover:shadow-blue-200/50">
+            <i data-lucide="download" class="w-6 h-6"></i> Download the App
         </button>
-    </div>
-</nav>
 
 
-<!-- HERO SECTION -->
-<section id="hero-section" class="pt-20 pb-24 px-4 text-center max-w-5xl mx-auto">
-    <h1 class="text-[48px] font-bold tracking-tight mb-6 text-slate-900 leading-[1.15]">
-        Your Personal AI Assistant <br />
-        <span class="bg-clip-text text-transparent" style="background-image: linear-gradient(to right, #468CFF, #FB76F9)">For All Your Files</span>
-    </h1>
-    <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 mb-12 leading-relaxed">
-        XeNo interprets your PDFs, documents, and photos and turns them into instant answers, summaries, and insights.
-    </p>
-    <button class="flex items-center gap-3 px-10 py-5 text-lg font-bold text-white rounded-2xl transition-all shadow-2xl hover:scale-105 active:scale-95 mx-auto mb-16" style="background: linear-gradient(135deg, #468CFF, #FB76F9)">
-        <i data-lucide="download" class="w-6 h-6" stroke-width="2.5"></i> Download the App
-    </button>
-
-
-    <!-- HERO INTERACTIVE ANIMATION BOX -->
-    <div class="relative max-w-4xl mx-auto p-[2px] rounded-[2.6rem] overflow-hidden group shadow-2xl">
-        <div class="absolute inset-0 bg-gradient-to-br from-pink-400 via-blue-400 to-pink-400 animate-gradient-xy opacity-30 group-hover:opacity-100 transition-opacity"></div>
-        <div class="bg-[#F8F9FE] rounded-[2.5rem] relative aspect-[16/9] flex flex-col border border-white/20 overflow-hidden">
-
-            <!-- Search Bar Mockup -->
-            <div class="px-6 pt-6 text-left">
-                <div class="bg-white rounded-full p-2.5 shadow-sm border border-slate-200/60 flex items-center justify-between gap-3 relative">
-                    <div class="flex items-center gap-2">
-                        <button class="p-2 text-slate-300"><i data-lucide="plus" class="w-[18px] h-[18px]"></i></button>
-                        <div class="flex items-center gap-1 bg-slate-900 text-white px-3 py-1 rounded-full text-[10px] font-bold">
-                            <i data-lucide="sparkles" class="w-3 h-3 text-pink-400"></i><span>AI Search</span>
+        <!-- HERO INTERACTIVE ANIMATION BOX -->
+        <div class="relative max-w-4xl mx-auto p-[2px] rounded-[2.6rem] overflow-hidden group shadow-2xl">
+            <div class="absolute inset-0 bg-gradient-to-br from-[#FB76F9] via-[#468CFF] to-[#FB76F9] animate-gradient-xy opacity-30 group-hover:opacity-100 transition-opacity"></div>
+            <div class="bg-[#F8F9FE] rounded-[2.5rem] relative aspect-[16/9] flex flex-col border border-white/20 overflow-hidden">
+               
+                <!-- Mock Header / Search Bar -->
+                <div class="px-6 pt-6 text-left">
+                    <div class="bg-white rounded-full p-2.5 shadow-sm border border-slate-200/60 flex items-center justify-between gap-3 relative">
+                        <div class="flex items-center gap-2">
+                            <button class="p-2 text-slate-300"><i data-lucide="plus" class="w-4.5 h-4.5"></i></button>
+                            <div class="flex items-center gap-1 bg-slate-900 text-white px-3 py-1 rounded-full text-[10px] font-bold">
+                                <i data-lucide="sparkles" class="w-3 h-3 text-[#FB76F9]"></i><span>AI Search</span>
+                            </div>
                         </div>
-                    </div>
-                    <div id="typewriter-container" class="flex-1 text-sm font-medium text-slate-400 px-2 min-h-[20px]">
-                        Ask XeNo anything...
-                    </div>
-                    <button class="bg-slate-900 text-white p-2 rounded-full"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></button>
-                </div>
-            </div>
-
-            <!-- Center Stage Content -->
-            <div id="hero-stage" class="flex-1 flex items-center justify-center p-8 relative">
-                <!-- Listening State -->
-                <div id="step-listening" class="hero-step active flex-col items-center gap-6 transition-all opacity-0">
-                    <div class="bg-white py-3 px-6 rounded-full shadow-lg border border-slate-100 flex flex-col items-start gap-2 relative">
-                        <div class="flex items-center gap-1.5 h-6" id="audio-wave">
-                            <!-- Wave bars generated by JS -->
-                        </div>
-                        <span class="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-pink-500 tracking-tight">Listening...</span>
-                    </div>
-                    <div class="w-20 h-20 rounded-full flex items-center justify-center text-white shadow-xl relative" style="background: linear-gradient(135deg, #FB76F9, #468CFF)">
-                        <div class="absolute inset-0 rounded-full animate-ping opacity-25 bg-pink-400"></div>
-                        <i data-lucide="mic" class="w-8 h-8"></i>
+                        <div id="hero-typing-bar" class="flex-1 text-sm font-medium text-slate-400 px-2 min-h-[20px]">Ask XeNo anything...</div>
+                        <button class="bg-slate-900 text-white p-2 rounded-full shadow-lg"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></button>
                     </div>
                 </div>
 
 
-                <!-- Analyzing State -->
-                <div id="step-analyzing" class="hero-step flex-col items-center gap-4 transition-all opacity-0">
-                    <div class="relative">
-                        <i data-lucide="loader-2" class="w-12 h-12 text-blue-500 animate-spin"></i>
-                        <i data-lucide="sparkles" class="w-5 h-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-pink-400"></i>
-                    </div>
-                    <p id="analysis-text" class="text-sm font-bold text-slate-500 animate-pulse tracking-wide uppercase">Analyzing Sources...</p>
+                <!-- Display Canvas -->
+                <div id="hero-display-area" class="flex-1 flex items-center justify-center p-8 relative overflow-hidden">
+                    <!-- Dynamic sequences injected here -->
                 </div>
 
 
-                <!-- Result: Documents -->
-                <div id="step-results-docs" class="hero-step w-full h-full flex-col transition-all opacity-0">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
-                        <div class="flex items-center gap-4 p-4 bg-white border border-slate-100 rounded-3xl shadow-sm"><div class="w-10 h-10 rounded-xl bg-green-50 text-green-500 flex items-center justify-center"><i data-lucide="file-spreadsheet" class="w-5 h-5"></i></div><div class="flex-1 font-bold text-slate-800">Q3_Spend.xlsx</div><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-500"></i></div>
-                        <div class="flex items-center gap-4 p-4 bg-white border border-slate-100 rounded-3xl shadow-sm"><div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center"><i data-lucide="presentation" class="w-5 h-5"></i></div><div class="flex-1 font-bold text-slate-800">Growth.pptx</div><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-500"></i></div>
-                        <div class="flex items-center gap-4 p-4 bg-white border border-slate-100 rounded-3xl shadow-sm md:col-span-2"><div class="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center"><i data-lucide="file-text" class="w-5 h-5"></i></div><div class="flex-1 font-bold text-slate-800">Budget_Approved.pdf</div><div class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded-full uppercase tracking-tighter">Relevant</div></div>
+                <!-- AI Intelligence Badge -->
+                <div class="absolute bottom-6 right-6 glass text-slate-800 p-4 rounded-2xl shadow-xl flex items-center gap-4 z-20 border border-white/50 transition-all hover:scale-105">
+                    <div class="p-2.5 rounded-xl text-white shadow-sm bg-gradient-to-br from-[#468CFF] to-[#FB76F9]">
+                        <i data-lucide="sparkles" class="w-[18px] h-[18px]"></i>
                     </div>
-                </div>
-
-
-                <!-- Result: Photos -->
-                <div id="step-results-photos" class="hero-step w-full h-full flex-col transition-all opacity-0">
-                    <div class="grid grid-cols-3 gap-3">
-                        <div class="aspect-square rounded-2xl overflow-hidden shadow-lg border-2 border-white transition-transform hover:scale-105"><img src="https://images.unsplash.com/photo-1552053832?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover"></div>
-                        <div class="aspect-square rounded-2xl overflow-hidden shadow-lg border-2 border-white transition-transform hover:scale-105"><img src="https://images.unsplash.com/photo-1552053833?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover"></div>
-                        <div class="aspect-square rounded-2xl overflow-hidden shadow-lg border-2 border-white transition-transform hover:scale-105"><img src="https://images.unsplash.com/photo-1552053834?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Status -->
-            <div class="absolute bottom-6 right-6 bg-white/95 backdrop-blur-md text-slate-800 p-4 rounded-2xl shadow-xl flex items-center gap-4 z-20 border border-white/50 transition-all hover:scale-105">
-                <div class="p-2.5 rounded-xl text-white shadow-sm" style="background: linear-gradient(135deg, #468CFF, #FB76F9)"><i data-lucide="sparkles" class="w-[18px] h-[18px]"></i></div>
-                <div class="pr-1 text-left">
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">AI Intelligence</p>
-                    <p class="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-500">Cross-platform Retrieval</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<!-- FORMAT STRIP -->
-<section class="bg-white/30 py-12 border-t border-slate-100/50">
-    <div class="max-w-5xl mx-auto px-8 text-center flex flex-wrap justify-center gap-12 opacity-[0.25] grayscale">
-        <div class="text-sm font-extrabold tracking-[0.3em] text-slate-600">PDF</div>
-        <div class="text-sm font-extrabold tracking-[0.3em] text-slate-600">DOCX</div>
-        <div class="text-sm font-extrabold tracking-[0.3em] text-slate-600">PNG</div>
-        <div class="text-sm font-extrabold tracking-[0.3em] text-slate-600">JPG</div>
-        <div class="text-sm font-extrabold tracking-[0.3em] text-slate-600">TXT</div>
-    </div>
-</section>
-
-
-<!-- HOW IT WORKS SECTION -->
-<section id="flow-section" class="py-24 px-4 relative overflow-hidden">
-    <div class="max-w-5xl mx-auto text-center relative w-full">
-        <h2 class="text-[36px] font-bold tracking-tight text-slate-900 mb-20">How XeNo Works</h2>
-
-
-        <div class="hidden md:block absolute top-[62%] left-0 w-full h-[2px] z-0 pointer-events-none">
-            <svg width="100%" height="20" viewBox="0 0 1000 20" fill="none" preserveAspectRatio="none" class="overflow-visible">
-                <path d="M166 10H833" stroke="#E2E8F0" stroke-width="2" stroke-dasharray="6 6" />
-                <path id="flow-progress-line" d="M166 10H833" stroke="url(#flowGradient)" stroke-width="4" stroke-linecap="round" class="flow-line-path" style="stroke-dasharray: 80 1000; stroke-dashoffset: 900;" />
-                <defs>
-                    <linearGradient id="flowGradient" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stop-color="#468CFF" stop-opacity="0" />
-                        <stop offset="50%" stop-color="#468CFF" />
-                        <stop offset="100%" stop-color="#FB76F9" />
-                    </linearGradient>
-                </defs>
-            </svg>
-        </div>
-
-
-        <div class="grid md:grid-cols-3 gap-8 relative z-10" id="flow-cards">
-            <!-- Card 1 -->
-            <div class="flow-card p-1 rounded-[2.2rem] transition-all duration-500 cursor-pointer bg-gradient-to-br from-[#468CFF]/50 to-[#FB76F9]/50 shadow-2xl scale-[1.02]" data-step="0">
-                <div class="bg-white border border-slate-100 p-8 rounded-[2rem] h-full flex flex-col text-left">
-                    <div class="mb-6">
-                        <div class="step-tag text-[9px] font-bold uppercase tracking-widest mb-3 px-2 py-1 rounded-md inline-block bg-blue-500 text-white shadow-md">Step 01</div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Contextualize</h3>
-                        <p class="text-slate-500 text-xs leading-relaxed">XeNo indexes and deeply understands the data hierarchy within your local files.</p>
-                    </div>
-                    <div class="bg-slate-50/50 rounded-2xl p-6 border border-slate-100 flex items-center justify-center relative h-36 overflow-hidden mt-auto">
-                        <i data-lucide="file-spreadsheet" class="text-green-500 absolute transition-all rotate-0 scale-110 w-8 h-8"></i>
-                        <i data-lucide="file-text" class="text-blue-500 absolute transition-all rotate-0 scale-110 w-8 h-8"></i>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="flow-card p-1 rounded-[2.2rem] transition-all duration-500 cursor-pointer bg-transparent hover:bg-white/40" data-step="1">
-                <div class="bg-white border border-slate-100 p-8 rounded-[2rem] h-full flex flex-col text-left">
-                    <div class="mb-6">
-                        <div class="step-tag text-[9px] font-bold uppercase tracking-widest mb-3 px-2 py-1 rounded-md inline-block bg-slate-100 text-slate-400">Step 02</div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Ask Naturally</h3>
-                        <p class="text-slate-500 text-xs leading-relaxed">Query your library using natural language. XeNo correlates data across formats.</p>
-                    </div>
-                    <div class="bg-slate-50/50 rounded-2xl p-6 border border-slate-100 flex items-center justify-center relative h-36 overflow-hidden mt-auto">
-                        <div class="bg-white p-4 rounded-2xl shadow-xl border w-full relative">
-                            <div class="flex gap-2 mb-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div><div class="h-2 w-full bg-slate-100 rounded-full"></div></div>
-                            <i data-lucide="mic" class="absolute -right-2 -bottom-2 w-8 h-8 rounded-full p-1.5 bg-blue-500 text-white transition-all scale-0"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="flow-card p-1 rounded-[2.2rem] transition-all duration-500 cursor-pointer bg-transparent hover:bg-white/40" data-step="2">
-                <div class="bg-white border border-slate-100 p-8 rounded-[2rem] h-full flex flex-col text-left">
-                    <div class="mb-6">
-                        <div class="step-tag text-[9px] font-bold uppercase tracking-widest mb-3 px-2 py-1 rounded-md inline-block bg-slate-100 text-slate-400">Step 03</div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Instant Insights</h3>
-                        <p class="text-slate-500 text-xs leading-relaxed">Turn raw files into formatted reports, summaries, and takeaways.</p>
-                    </div>
-                    <div class="bg-slate-50/50 rounded-2xl p-6 border border-slate-100 flex items-center justify-center relative h-36 overflow-hidden mt-auto">
-                        <div class="space-y-3 w-full">
-                            <div class="flex gap-2 p-2 bg-white rounded-xl shadow-sm"><div class="w-4 h-4 rounded bg-slate-100"></div><div class="h-1.5 w-1/2 bg-slate-50 rounded-full mt-1.5"></div></div>
-                            <div class="flex gap-2 p-2 bg-white rounded-xl shadow-sm"><div class="w-4 h-4 rounded bg-slate-100"></div><div class="h-1.5 w-1/2 bg-slate-50 rounded-full mt-1.5"></div></div>
-                        </div>
+                    <div class="pr-1 text-left">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">AI Intelligence</p>
+                        <p class="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-500">Cross-platform Retrieval</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<!-- INTELLIGENCE FEATURES -->
-<section class="py-24 px-4 relative max-w-7xl mx-auto space-y-32">
-    <div class="text-center">
-        <h2 class="text-[36px] font-bold tracking-tight text-slate-900 mb-6">How XeNo Turns Your Files Into Answers</h2>
-        <p class="text-slate-500 text-[20px] max-w-2xl mx-auto leading-relaxed">XeNo reads, understands, and connects your files locally — so you get answers in seconds, not searches.</p>
-    </div>
+    <script>
+        let heroStep = 0;
+        let typingInterval = null;
+        const blue = "#468CFF", pink = "#FB76F9";
+        const typingBar = document.getElementById('hero-typing-bar');
+        const displayArea = document.getElementById('hero-display-area');
+       
+        const heroPrompts = {
+            1: "Xeno, what was the Q3 marketing spend breakdown?",
+            6: "Xeno find pictures of dog"
+        };
 
 
-    <!-- Section 1 -->
-    <div class="grid md:grid-cols-2 gap-16 items-center py-20">
-        <div class="space-y-8">
-            <div class="space-y-4">
-                <div class="w-12 h-12 rounded-2xl bg-white shadow-lg border border-slate-100 flex items-center justify-center text-blue-500"><i data-lucide="file-text"></i></div>
-                <h3 class="text-[36px] font-bold text-slate-900 tracking-tight leading-tight">Documents</h3>
-                <p class="text-slate-500 text-lg leading-relaxed">Turns long files into usable knowledge.</p>
-            </div>
-            <div class="space-y-5">
-                <div class="flex items-start gap-4"><div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i></div><span class="font-semibold text-slate-700 text-lg leading-snug">Extracts text from documents and scanned files</span></div>
-                <div class="flex items-start gap-4"><div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i></div><span class="font-semibold text-slate-700 text-lg leading-snug">Breaks content into meaningful sections for understanding</span></div>
-            </div>
-        </div>
-        <div class="relative group">
-            <div class="absolute inset-0 bg-blue-400/5 blur-[100px] -z-10 rounded-full scale-75"></div>
-            <div class="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-white flex items-center justify-center relative overflow-hidden min-h-[400px]">
-                <div class="w-full space-y-6 relative text-left">
-                    <div class="bg-white p-5 rounded-3xl shadow-xl border border-slate-100 flex items-center gap-4"><div class="w-12 h-12 rounded-xl bg-red-500 text-white flex items-center justify-center font-bold text-xs">PDF</div><div class="flex-1 space-y-2"><div class="h-2 w-32 bg-slate-100 rounded-full"></div><div class="h-1.5 w-16 bg-slate-50 rounded-full"></div></div></div>
-                    <div class="space-y-4 pt-4 ml-6 relative">
-                        <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-slate-100 -translate-x-6"></div>
-                        <div class="bg-white p-4 rounded-2xl shadow-md border border-slate-100 flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div><p class="text-xs font-semibold text-slate-600">Key milestone identified: June 15th</p></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Section 2: Reversed -->
-    <div class="grid md:grid-cols-2 gap-16 items-center py-20">
-        <div class="space-y-8 md:order-2">
-            <div class="space-y-4">
-                <div class="w-12 h-12 rounded-2xl bg-white shadow-lg border border-slate-100 flex items-center justify-center text-blue-500"><i data-lucide="file-spreadsheet"></i></div>
-                <h3 class="text-[36px] font-bold text-slate-900 tracking-tight leading-tight">Spreadsheets</h3>
-                <p class="text-slate-500 text-lg leading-relaxed">Analyzes complex data grids in real-time.</p>
-            </div>
-            <div class="space-y-5">
-                <div class="flex items-start gap-4"><div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i></div><span class="font-semibold text-slate-700 text-lg leading-snug">Reads tables, numbers, and structured data</span></div>
-                <div class="flex items-start gap-4"><div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i></div><span class="font-semibold text-slate-700 text-lg leading-snug">Turns raw sheets into searchable insights</span></div>
-            </div>
-        </div>
-        <div class="relative group md:order-1">
-            <div class="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-white flex items-center justify-center relative overflow-hidden min-h-[400px]">
-                <div class="w-full space-y-6 relative text-left">
-                    <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
-                        <div class="bg-slate-50 px-4 py-2 border-b flex gap-1.5"><div class="w-2 h-2 rounded-full bg-slate-200"></div><div class="w-2 h-2 rounded-full bg-slate-200"></div></div>
-                        <div class="p-4 grid grid-cols-3 gap-2">
-                            <div class="h-6 bg-slate-50 rounded animate-pulse"></div>
-                            <div class="h-6 bg-slate-50 rounded animate-pulse" style="animation-delay: 200ms"></div>
-                            <div class="h-6 bg-slate-50 rounded animate-pulse" style="animation-delay: 400ms"></div>
-                        </div>
-                    </div>
-                    <div class="bg-blue-600 text-white p-4 rounded-2xl shadow-2xl flex items-center gap-4 translate-x-8 -translate-y-4">
-                        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-                        <div><p class="text-[10px] font-bold uppercase opacity-60">Insight found</p><p class="text-xs font-bold">Revenue growth +14% QoQ</p></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<!-- PERSONAS SECTION -->
-<section class="py-24 px-4 bg-white/30 border-t border-white/50 overflow-hidden text-center">
-    <div class="max-w-7xl mx-auto">
-        <h2 class="text-[36px] font-bold tracking-tight text-slate-900 mb-6">Who Needs XeNo AI</h2>
-        <p class="text-slate-500 text-lg max-w-2xl mx-auto mb-16 leading-relaxed">XeNo is for professionals, students, and creators who hate manual sifting.</p>
-
-
-        <div class="relative">
-            <div id="persona-carousel" class="flex gap-8 overflow-x-auto pb-12 snap-x snap-mandatory no-scrollbar scroll-smooth">
-                <!-- Cards will be rendered by JS for cleaner structure -->
-            </div>
-            <div class="flex justify-center gap-4 mt-8">
-                <button id="scroll-left" class="w-12 h-12 rounded-full bg-white shadow-lg border border-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-colors"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
-                <button id="scroll-right" class="w-12 h-12 rounded-full bg-white shadow-lg border border-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-colors"><i data-lucide="arrow-right" class="w-5 h-5"></i></button>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<script>
-    // Initialize Lucide
-    lucide.createIcons();
-
-
-    // --- HERO ANIMATION LOGIC ---
-    const heroSteps = [
-        { id: 'listening', text: 'Ask XeNo anything...' },
-        { id: 'listening', text: 'Xeno, What was the Q3 marketing spend breakdown?' },
-        { id: 'analyzing', text: 'Analyzing Sources...' },
-        { id: 'results-docs', text: 'Found 3 relevant files' },
-        { id: 'results-docs', text: 'Ask XeNo anything...' },
-        { id: 'listening', text: 'Ask XeNo anything...' },
-        { id: 'listening', text: 'Xeno find pictures of dog' },
-        { id: 'analyzing', text: 'Indexing Photos...' },
-        { id: 'results-photos', text: 'Found relevant images' },
-        { id: 'results-photos', text: 'Ask XeNo anything...' }
-    ];
-
-
-    let currentHeroStep = 0;
-    const typewriterEl = document.getElementById('typewriter-container');
-    const heroStageParts = {
-        'listening': document.getElementById('step-listening'),
-        'analyzing': document.getElementById('step-analyzing'),
-        'results-docs': document.getElementById('step-results-docs'),
-        'results-photos': document.getElementById('step-results-photos')
-    };
-
-
-    function updateHeroUI(stepIndex) {
-        const step = heroSteps[stepIndex];
-
-        // Handle analysis text change
-        if(stepIndex === 7) document.getElementById('analysis-text').innerText = 'Indexing Photos...';
-        if(stepIndex === 2) document.getElementById('analysis-text').innerText = 'Analyzing Sources...';
-
-
-        // Switch steps visibility
-        Object.keys(heroStageParts).forEach(key => {
-            const el = heroStageParts[key];
-            if (key === step.id) {
-                el.classList.add('active');
-                setTimeout(() => el.style.opacity = '1', 50);
-            } else {
-                el.style.opacity = '0';
-                setTimeout(() => el.classList.remove('active'), 500);
-            }
-        });
-
-
-        // Trigger typewriter if text changed
-        if (stepIndex === 1 || stepIndex === 6) {
-            runTypewriter(step.text);
-        } else {
-            typewriterEl.innerText = step.text;
+        function typeEffect(target, text) {
+            if (typingInterval) clearInterval(typingInterval);
+            target.textContent = '';
+            let i = 0;
+            typingInterval = setInterval(() => {
+                if (i < text.length) target.textContent += text.charAt(i++);
+                else clearInterval(typingInterval);
+            }, 30);
         }
-    }
 
 
-    function runTypewriter(text) {
-        typewriterEl.innerText = "";
-        let i = 0;
-        const timer = setInterval(() => {
-            if (i < text.length) {
-                typewriterEl.innerText += text.charAt(i);
-                i++;
-            } else {
-                clearInterval(timer);
+        function renderHero() {
+            // Typing Logic
+            if (heroStep === 1 || heroStep === 6) {
+                typeEffect(typingBar, heroPrompts[heroStep]);
+            } else if (heroStep === 0 || heroStep === 5) {
+                typingBar.textContent = 'Ask XeNo anything...';
+            } else if (heroStep >= 2 && heroStep <= 4) {
+                typingBar.textContent = heroPrompts[1];
+            } else if (heroStep >= 7) {
+                typingBar.textContent = heroPrompts[6];
             }
-        }, 40);
-    }
 
 
-    // Generate Audio Wave Bars
-    const waveContainer = document.getElementById('audio-wave');
-    for (let i = 0; i < 12; i++) {
-        const bar = document.createElement('div');
-        bar.className = 'w-1 rounded-full animate-wave';
-        bar.style.height = `${20 + Math.random() * 80}%`;
-        bar.style.animationDelay = `${i * 0.08}s`;
-        bar.style.background = i % 2 === 0 ? '#468CFF' : '#FB76F9';
-        waveContainer.appendChild(bar);
-    }
-
-
-    // --- FLOW (HOW IT WORKS) LOGIC ---
-    let currentFlowStep = 0;
-    let flowAutoPlay = true;
-    const flowLine = document.getElementById('flow-progress-line');
-    const flowCards = document.querySelectorAll('.flow-card');
-    const flowOffsets = ['900', '500', '100'];
-
-
-    function updateFlowUI(step) {
-        currentFlowStep = step;
-        flowLine.style.strokeDashoffset = flowOffsets[step];
-
-        flowCards.forEach((card, idx) => {
-            const tag = card.querySelector('.step-tag');
-            const micIcon = card.querySelector('[data-lucide="mic"]');
-
-            if (idx === step) {
-                card.classList.add('bg-gradient-to-br', 'from-[#468CFF]/50', 'to-[#FB76F9]/50', 'shadow-2xl', 'scale-[1.02]');
-                card.classList.remove('bg-transparent', 'hover:bg-white/40');
-                tag.classList.add('bg-blue-500', 'text-white', 'shadow-md');
-                tag.classList.remove('bg-slate-100', 'text-slate-400');
-                if(micIcon) micIcon.style.transform = 'scale(1.1)';
-            } else {
-                card.classList.remove('bg-gradient-to-br', 'from-[#468CFF]/50', 'to-[#FB76F9]/50', 'shadow-2xl', 'scale-[1.02]');
-                card.classList.add('bg-transparent', 'hover:bg-white/40');
-                tag.classList.remove('bg-blue-500', 'text-white', 'shadow-md');
-                tag.classList.add('bg-slate-100', 'text-slate-400');
-                if(micIcon) micIcon.style.transform = 'scale(0)';
-            }
-        });
-    }
-
-
-    flowCards.forEach(card => {
-        card.addEventListener('click', () => {
-            flowAutoPlay = false;
-            updateFlowUI(parseInt(card.dataset.step));
-            setTimeout(() => flowAutoPlay = true, 8000);
-        });
-    });
-
-
-    // --- PERSONA CAROUSEL ---
-    const personas = [
-        { title: "Professionals", tagline: "Walk into meetings already prepared.", image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200", query: "Show me client X notes from 3 weeks ago.", type: "RECALL", icon: "briefcase" },
-        { title: "Grad Students", tagline: "Understand long reading in minutes.", image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=1200", query: "Summarize the fiscal policy paper from last Tuesday.", type: "SUMMARY", icon: "graduation-cap" },
-        { title: "Creators", tagline: "Turn hours of research into scripts.", image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1200", query: "Find b-roll descriptions from script v2.", type: "KNOWLEDGE", icon: "clapperboard" }
-    ];
-
-
-    const carousel = document.getElementById('persona-carousel');
-    personas.forEach(p => {
-        const card = document.createElement('div');
-        card.className = "min-w-[85vw] md:min-w-[600px] aspect-[16/9] rounded-[2.5rem] overflow-hidden relative snap-center shadow-2xl border border-white/20 flex-shrink-0";
-        card.innerHTML = `
-                <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                <div class="absolute top-8 left-8 bg-white/90 backdrop-blur-xl p-8 rounded-[2rem] shadow-2xl max-w-[80%] border border-white/50 text-left">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 bg-blue-50 rounded-xl text-blue-500"><i data-lucide="${p.icon}" class="w-5 h-5"></i></div>
-                        <h4 class="text-xl font-bold text-slate-900">${p.title}</h4>
-                    </div>
-                    <p class="text-slate-600 font-semibold text-lg mb-6 leading-tight">${p.tagline}</p>
-                    <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200/50 flex flex-col gap-2">
-                        <div class="flex justify-between items-center opacity-60">
-                            <span class="text-[9px] font-bold text-blue-500 uppercase tracking-widest">XeNo ${p.type}</span>
-                            <span class="text-[9px] text-slate-400">Recall Active</span>
+            let html = '';
+           
+            // 0 & 5: Listening
+            if (heroStep === 0 || heroStep === 5) {
+                html = `
+                <div class="flex flex-col items-center gap-8 animate-in fade-in duration-700">
+                    <div class="bg-white py-4 px-8 rounded-full shadow-2xl glass flex flex-col items-start gap-2 relative">
+                        <div class="flex items-center gap-2 h-8">
+                            ${Array(14).fill(0).map((_,i)=>`
+                                <div class="w-1.5 rounded-full animate-wave" style="height:${30 + (i % 3 * 20)}%; animation-delay:${i*0.08}s; background:${i%2===0?blue:pink}"></div>
+                            `).join('')}
                         </div>
-                        <p class="text-[11px] font-bold text-slate-700 italic">"${p.query}"</p>
+                        <span class="text-sm font-bold text-slate-800 tracking-tight">XeNo Listening...</span>
                     </div>
-                </div>
-            `;
-        carousel.appendChild(card);
-    });
-    lucide.createIcons();
-
-
-    document.getElementById('scroll-left').onclick = () => carousel.scrollBy({ left: -400, behavior: 'smooth' });
-    document.getElementById('scroll-right').onclick = () => carousel.scrollBy({ left: 400, behavior: 'smooth' });
-
-
-    // --- GLOBAL TIMERS ---
-    window.onload = () => {
-        // Hero Observer
-        const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                setInterval(() => {
-                    currentHeroStep = (currentHeroStep + 1) % heroSteps.length;
-                    updateHeroUI(currentHeroStep);
-                }, 3500);
-                observer.disconnect();
+                    <div class="w-24 h-24 rounded-full flex items-center justify-center text-white shadow-xl relative" style="background:linear-gradient(135deg, ${pink}, ${blue})">
+                        <div class="absolute inset-0 rounded-full animate-ping opacity-20" style="background-color:${pink}"></div>
+                        <i data-lucide="mic" class="w-10 h-10"></i>
+                    </div>
+                </div>`;
             }
-        }, { threshold: 0.1 });
-        observer.observe(document.getElementById('hero-section'));
+            // 1 & 6: Typing (Empty Card)
+            else if (heroStep === 1 || heroStep === 6) {
+                html = ``;
+            }
+            // 2 & 7: Searching/Indexing
+            else if (heroStep === 2 || heroStep === 7) {
+                if (heroStep === 2) {
+                    html = `
+                    <div class="flex flex-col items-center gap-6 animate-in zoom-in-95 duration-500">
+                        <div class="relative"><i data-lucide="loader-2" class="w-16 h-16 text-blue-500 animate-spin"></i><i data-lucide="sparkles" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-pink-400 w-6 h-6"></i></div>
+                        <p class="text-lg font-bold text-slate-500 animate-pulse uppercase tracking-widest">Searching Across Files...</p>
+                    </div>`;
+                } else {
+                    html = `
+                    <div class="flex flex-col items-center gap-6 animate-in zoom-in-95 duration-500">
+                        <div class="loading-bar-container"><div class="loading-bar-progress"></div></div>
+                        <p class="text-lg font-bold text-slate-500 uppercase tracking-widest">Indexing Image Library...</p>
+                    </div>`;
+                }
+            }
+            // 3 & 4: File Results
+            else if (heroStep === 3 || heroStep === 4) {
+                html = `
+                <div class="w-full max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-4 text-left animate-in slide-in-from-bottom-8 duration-700">
+                    <div class="flex items-center gap-4 p-6 bg-white border border-slate-100 rounded-[2rem] shadow-xl hover:scale-105 transition-transform duration-500">
+                        <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center shadow-sm"><i data-lucide="file-text" class="w-6 h-6"></i></div>
+                        <div class="flex-1">
+                            <p class="text-xs text-slate-400 font-bold uppercase tracking-tighter mb-0.5">Finance Doc</p>
+                            <div class="font-bold text-slate-800 text-sm">Q3_Budget_Summary.pdf</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-6 bg-white border border-slate-100 rounded-[2rem] shadow-xl hover:scale-105 transition-transform duration-500">
+                        <div class="w-12 h-12 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center shadow-sm"><i data-lucide="file-spreadsheet" class="w-6 h-6"></i></div>
+                        <div class="flex-1">
+                            <p class="text-xs text-slate-400 font-bold uppercase tracking-tighter mb-0.5">Spreadsheet</p>
+                            <div class="font-bold text-slate-800 text-sm">Marketing_Ad_Spend.xlsx</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-6 bg-white border border-slate-100 rounded-[2rem] shadow-xl md:col-span-2 hover:scale-105 transition-transform duration-500">
+                        <div class="w-12 h-12 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center shadow-sm"><i data-lucide="presentation" class="w-6 h-6"></i></div>
+                        <div class="flex-1">
+                            <p class="text-xs text-slate-400 font-bold uppercase tracking-tighter mb-0.5">Presentation</p>
+                            <div class="font-bold text-slate-800 text-sm">Brand_Strategy_V2.pptx</div>
+                        </div>
+                        <div class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Cross-linked</div>
+                    </div>
+                </div>`;
+            }
+            // 8 & 9: Dog Results
+            else if (heroStep === 8 || heroStep === 9) {
+                html = `
+                <div class="grid grid-cols-3 gap-6 w-full animate-in zoom-in-95 duration-700 px-4">
+                    ${[4,5,6].map(i=>`
+                        <div class="aspect-square rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white transform hover:scale-105 transition-transform">
+                            <img src="https://images.unsplash.com/photo-${1552053831+i}?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                        </div>`).join('')}
+                </div>`;
+            }
 
 
-        // Flow Auto-play
+            displayArea.innerHTML = html;
+            lucide.createIcons();
+        }
+       
         setInterval(() => {
-            if (flowAutoPlay) {
-                currentFlowStep = (currentFlowStep + 1) % 3;
-                updateFlowUI(currentFlowStep);
-            }
-        }, 4000);
-    };
-</script>
+            heroStep = (heroStep + 1) % 10;
+            renderHero();
+        }, 3500);
+
+
+        window.onload = () => {
+            lucide.createIcons();
+            renderHero();
+        };
+    </script>
 </body>
 </html>
 
