@@ -1425,5 +1425,15 @@
         });
     });
 </script>
+<script>
+    window.addEventListener('load', function() {
+        const video = document.getElementById('hero-video');
+        if (video) {
+            video.play().catch(error => {
+                console.log("Autoplay prevented by browser. Trying again on interaction.");
+            });
+        }
+    });
+</script>
 </body>
 </html>
