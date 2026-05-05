@@ -347,7 +347,7 @@
     <div class="flex items-center gap-8">
         <div class="flex items-center gap-1 font-bold text-2xl tracking-tighter">
             <img src="./../XeNo.png" alt="" class="w-10 h-10">
-            <span class="text-lg font-bold tracking-tight uppercase">XeNo</span>
+            <span class="text-lg font-bold tracking-tight">XeNo</span>
         </div>
         <!--        <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">-->
         <!--            <a href="#" class="hover:text-black transition-colors">Pricing</a>-->
@@ -1426,13 +1426,31 @@
     });
 </script>
 <script>
-    window.addEventListener('load', function() {
+    // Use 'load' to ensure the video source has actually started to buffer
+    window.addEventListener('load', () => {
         const video = document.getElementById('hero-video');
-        if (video) {
-            video.play().catch(error => {
-                console.log("Autoplay prevented by browser. Trying again on interaction.");
+        if (!video) return;
+
+        // Force the video to load immediately
+        video.load();
+
+        const attemptPlay = () => {
+            video.play().catch(() => {
+                console.log("Autoplay blocked. Waiting for interaction...");
+                // If blocked, wait for scroll or click
+                const forcePlay = () => {
+                    video.play();
+                    ["scroll", "click", "touchstart"].forEach(ev =>
+                        window.removeEventListener(ev, forcePlay)
+                    );
+                };
+                ["scroll", "click", "touchstart"].forEach(ev =>
+                    window.addEventListener(ev, forcePlay)
+                );
             });
-        }
+        };
+
+        attemptPlay();
     });
 </script>
 </body>
