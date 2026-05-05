@@ -346,8 +346,8 @@
 <nav class="flex items-center justify-between px-8 py-4 max-w-7xl mx-auto backdrop-blur-md sticky top-0 z-50">
     <div class="flex items-center gap-8">
         <div class="flex items-center gap-1 font-bold text-2xl tracking-tighter">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white" style="background: linear-gradient(to bottom right, #468CFF, #FB76F9)">X</div>
-            <span>XeNo</span>
+            <img src="./../XeNo.png" alt="" class="w-10 h-10">
+            <span class="text-lg font-bold tracking-tight uppercase">XeNo</span>
         </div>
         <!--        <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">-->
         <!--            <a href="#" class="hover:text-black transition-colors">Pricing</a>-->
@@ -513,19 +513,21 @@
             </div>
         </div>
 
-        <div class="relative w-[80%] max-w-[320px] mx-auto rounded-[2.6rem] overflow-hidden shadow-2xl">
+        <div class="lg:mr-5 relative w-full mx-auto max-w-[320px] rounded-[3rem] overflow-hidden group shadow-[0_20px_60px_-15px_rgba(70,140,255,0.2)] bg-slate-900 border-[1.5px] border-slate-700/50 flex flex-col items-center">
+
+
             <video
                     id="hero-video"
-                    class="w-full h-auto block"
-                    autoplay
+                    class="w-full h-full rounded-[2.6rem] relative"
                     muted
                     loop
                     playsinline
-                    poster="video-thumbnail.jpg"
+                    autoplay
             >
-                <source src="xeno-hero.mp4" type="video/mp4">
+                <source src="xeno-hero2.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
+
         </div>
 
     </div>
@@ -1206,6 +1208,7 @@
     }
 
     function renderHero() {
+        if (!typingBar || !displayArea) return;
         // Typing Logic
         if (heroStep === 1 || heroStep === 6) {
             typeEffect(typingBar, heroPrompts[heroStep]);
