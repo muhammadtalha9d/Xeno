@@ -217,7 +217,7 @@
 
 
 <!-- COMMAND CENTER -->
-<section class="py-[40px]  md:py-[120px] px-6 text-center bg-white">
+<section class="py-[40px]  md:py-[120px] px-6 text-center bg-[#f8f9fc]">
     <div class="relative w-full max-w-[700px] h-[220px] mx-auto mb-[60px] flex justify-center items-end">
         <!-- Orbital icons -->
         <div class="absolute bottom-[30%] left-[0%] md:left-[5%] h-10 w-10 md:w-16 md:h-16 bg-white border border-indigo-50 rounded-xl flex items-center justify-center text-brand-purple shadow-sm transition-transform hover:scale-110"><i data-lucide="image"></i></div>
@@ -325,7 +325,7 @@
         <div class="bg-slate-50/50 border-b border-slate-100 p-3">
             <div class="grid grid-cols-2 md:flex md:flex-row md:justify-center gap-2 max-w-xl mx-auto md:max-w-none">
 
-                <button onclick="switchTab('search')" id="btn-search" class="tab-btn px-6 py-3 rounded-xl text-[0.95rem] font-bold text-black flex items-center justify-center md:justify-start gap-2.5 transition-all hover:bg-indigo-30  whitespace-nowrap">
+                <button onclick="switchTab('search')" id="btn-search" class=" tab-btn px-6 py-3 rounded-xl text-[0.95rem] font-bold text-black flex items-center justify-center md:justify-start gap-2.5 transition-all hover:bg-indigo-30  whitespace-nowrap">
                     <i data-lucide="search" size="18" ></i> Search
                 </button>
 
@@ -704,6 +704,9 @@
             targetPanel.classList.add('active');
         }
     }
+    document.addEventListener('DOMContentLoaded', () => {
+        switchTab('search');
+    });
 
 
     function toggleFaq(btn) {
