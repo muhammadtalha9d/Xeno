@@ -327,7 +327,7 @@
         @keyframes blink { 50% { opacity: 0 } }
     </style>
 </head>
-<body class="font-sans overflow-x-hidden min-h-screen text-slate-900 overflow-x-hidden relative pb-20">
+<body class="font-sans overflow-x-hidden min-h-screen text-slate-900 overflow-x-hidden relative">
 
 <div class="fixed inset-0 -z-10 opacity-[0.20]" style="background: linear-gradient(145deg, #FFFFFF 20%, #468CFF 45%, #FB76F9 75%, #FFFFFF 100%); filter: blur(120px);"></div>
 <!-- Navigation -->
@@ -478,7 +478,7 @@
 
     <section id="hero-section" class="relative w-full overflow-hidden">
         <div class="pt-10 md:pt-20 lg:pt-10 pb-20 px-4 max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="grid lg:grid-cols-2 gap-12 items-center text-center lg:text-left justify-center">
 
                 <div class="text-center lg:text-left flex flex-col items-center lg:items-start">
                     <h1 class="text-[36px] md:text-[42px] font-normal tracking-tight mb-6 text-slate-900 leading-[1.15]">
@@ -1106,45 +1106,26 @@
 
 
 <!-- MODERN FOOTER -->
-<footer class="bg-white border-t border-slate-100 py-10 md:py-24 px-10">
-    <div class="max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-16 text-left">
-        <div class="col-span-2">
-            <div class="flex items-center gap-2.5 group cursor-pointer mb-2">
-                <img src="./../XeNo-logo.png" alt="" class="w-full max-w-[120px] h-auto">
+<footer class="px-10 py-16 border-t border-slate-100 bg-white flex flex-col md:flex-row justify-between items-center gap-6">
+    <a href="#" class="flex items-center gap-2 text-[1.3rem] font-extrabold tracking-tighter">
+        <div class="flex items-center gap-2.5 group cursor-pointer mb-2">
+            <img src="/XeNo-logo.png" alt="" class="w-full max-w-[120px] h-auto">
 
-            </div>
-            <p class="text-slate-500 font-medium max-w-xs leading-relaxed mb-8">The world's most private AI assistant. Designed to unlock the power of your local files without the cloud.</p>
-            <div class="flex items-center gap-6">
-                <a href="#" class="text-slate-400 hover:text-brand transition-colors"><i data-lucide="twitter" class="w-6 h-6"></i></a>
-                <a href="#" class="text-slate-400 hover:text-brand transition-colors"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                <a href="#" class="text-slate-400 hover:text-brand transition-colors"><i data-lucide="github" class="w-6 h-6"></i></a>
-            </div>
         </div>
-        <!--        <div>-->
-        <!--            <h5 class="text-black font-bold uppercase text-xs tracking-widest mb-8">Product</h5>-->
-        <!--            <ul class="space-y-4">-->
-        <!--                <li><a href="#" class="text-slate-500 font-medium hover:text-brand transition-all">Features</a></li>-->
-        <!--                <li><a href="#" class="text-slate-500 font-medium hover:text-brand transition-all">Pricing</a></li>-->
-        <!--            </ul>-->
-        <!--        </div>-->
-        <div>
-            <h5 class="text-black font-bold uppercase text-xs tracking-widest mb-8">Resources</h5>
-            <ul class="space-y-4">
-                <li><a href="https://xeno.imaginationai.net/terms
+    </a>
+    <div class="">
+        <a href="https://xeno.imaginationai.net/terms
 "
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="text-slate-500 font-medium hover:text-brand transition-all">Terms & conditions</a></li>
-                <li><a href="https://xeno.imaginationai.net/privacy-policy/"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="text-slate-500 font-medium hover:text-brand transition-all">Privacy Policy</a></li>
-            </ul>
-        </div>
+           target="_blank"
+           rel="noopener noreferrer"
+           class="text-slate-500 font-medium hover:text-brand transition-all md:pr-[30px]">Terms & conditions</a>
+        <a href="https://xeno.imaginationai.net/privacy-policy/"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="text-slate-500 font-medium hover:text-brand transition-all md:pl-[30px]">Privacy Policy</a>
     </div>
-    <div class="max-w-[1400px] mx-auto pt-12 border-t border-slate-50 text-center">
-        <p class="text-sm font-medium text-slate-400">© 2026 XeNo AI Technology. All rights reserved.</p>
-    </div>
+
+    <div class="text-slate-400 text-sm">© 2025 XeNo AI. Your files. Your device. Your privacy.</div>
 </footer>
 
 <!-- REPLACE the entire <script> section at the bottom of your document with this: -->
