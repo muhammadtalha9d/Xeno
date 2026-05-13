@@ -294,7 +294,7 @@
         }
         .testimonial-carousel::-webkit-scrollbar { display: none; }
         .t-scroller-card {
-            flex: 0 0 380px; scroll-snap-align: center; background: white; border-radius: 2.5rem;
+            scroll-snap-align: center; background: white; border-radius: 2.5rem;
             padding: 2.5rem; border: 1px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             display: flex; flex-direction: column; justify-content: space-between;
         }
@@ -477,7 +477,7 @@
     </nav>
 
     <section id="hero-section" class="relative w-full overflow-hidden">
-        <div class="pt-20 lg:pt-10 pb-20 px-4 max-w-7xl mx-auto">
+        <div class="pt-10 md:pt-20 lg:pt-10 pb-20 px-4 max-w-7xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
 
                 <div class="text-center lg:text-left flex flex-col items-center lg:items-start">
@@ -533,7 +533,7 @@
 </div>
 
 
-<section id="comparison" class="section-py px-10 bg-white border-b border-slate-50">
+<section id="comparison" class="py-10  md:py-0 md:section-py px-4 md:px-10 bg-white border-b border-slate-50">
     <div class="max-w-6xl mx-auto text-center mb-20">
         <h2 class="font-bold mb-2 text-[36px] leading-[1.2] text-slate-900">
             Find Answers Across Your PDFs, Docs, and Images
@@ -574,7 +574,7 @@
 
 
 <!-- HOW IT WORKS SECTION -->
-<section id="flow-section" class="py-24 px-4 relative overflow-hidden">
+<section id="flow-section" class="py-10 md:py-24 px-4 relative overflow-hidden">
     <div class="max-w-5xl mx-auto text-center relative w-full">
         <h2 class="text-[36px] font-bold tracking-tight text-slate-900 ">How XeNo Works</h2>
         <p class="font-normal text-[20px] leading-relaxed text-[rgb(71,85,105)]  mb-20">
@@ -645,7 +645,7 @@
     </div>
 </section>
 
-<section class="py-24 px-4 relative max-w-7xl mx-auto">
+<section class="py-10 md:py-24 px-4 relative max-w-7xl mx-auto">
     <div class="text-center ">
         <h2 class="text-[36px] font-bold text-slate-900">Context-Aware Answers From Your Files</h2>
         <p class="text-slate-500 text-[20px] max-w-2xl mx-auto">XeNo reads, understands, and connects your
@@ -840,14 +840,14 @@
 
 
 
-<section class="py-24 px-4 bg-white overflow-hidden text-center">
+<section class="py-10 md:py-24 px-4 bg-white overflow-hidden text-center">
     <div class="max-w-7xl mx-auto">
         <h2 class="text-[36px] font-bold tracking-tight text-slate-900 ">Who Needs XeNo AI</h2>
         <p class="text-slate-500 text-[20px] max-w-2xl mx-auto mb-16 leading-relaxed">XeNo is for professionals, students, and creators who hate manual sifting.</p>
 
 
         <div class="relative">
-            <div id="persona-carousel" class="grid grid-cols-3 gap-6 px-4">
+            <div id="persona-carousel" class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
                 <!-- Cards will be rendered by JS for cleaner structure -->
             </div>
             <!--            <div class="flex justify-center gap-4 mt-8">-->
@@ -863,7 +863,7 @@
 
 
 <!-- PRIVACY DESIGNER GRID -->
-<section class="section-py px-10 section-gradient-bg">
+<section class="py-10  md:py-0 md:section-py px-5 md:px-10 section-gradient-bg">
     <div class="max-w-6xl mx-auto text-center mb-16">
         <h2 class="text-[30px] md:text-[36px] font-bold leading-tight text-slate-900">
             Built for Privacy. Designed for Speed.
@@ -873,7 +873,7 @@
             XeNo works on your device, so your files stay private while answers stay fast.
         </p>
     </div>
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 mb-64">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 mb-20 md:mb-64">
         <div class="md:col-span-2 bg-white border border-slate-100 p-10 rounded-card shadow-sm transition-transform hover:-translate-y-1">
             <div class="w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-6"><i data-lucide="cpu" class="w-6 h-6"></i></div>
             <h4 class="text-xl font-bold text-gray-900 mb-3">On-Device Processing</h4>
@@ -912,7 +912,7 @@
     <!-- KEY CAPABILITIES -->
 
     <div class="max-w-7xl mx-auto capabilities-grid">
-        <div class="sticky-col text-left">
+        <div class="md:sticky-col text-left">
             <h2 class="font-['Plus_Jakarta_Sans'] font-bold text-[36px] leading-[55px] text-[rgb(15,23,42)] mb-4">
                 Everything You Need to Work Faster With Your Files
             </h2>
@@ -952,10 +952,10 @@
 <!--        <div class="flex justify-center items-center"><div class="relative"><div class="w-[300px] h-[300px] rounded-full border border-white/10 flex items-center justify-center shadow-[0_0_80px_rgba(99,102,241,0.15)]"><i data-lucide="shield" class="w-24 h-24 text-brand"></i></div></div></div>-->
 <!--    </div>-->
 <!--</section>-->
-<img src="/v1.1/final-cta.png" height="1848" width="4320"/>
+<img src="/v1.1/final-cta.png" height="1848" width="4320" class=""/>
 
 <!-- TESTIMONIALS (HORIZONTAL SCROLL) -->
-<section class="section-py px-10 section-gradient-bg">
+<section class="py-10  md:py-0 md:section-py px-4 md:px-10 section-gradient-bg">
     <div class="max-w-7xl mx-auto text-center mb-20">
         <h2 class="h-section text-[36px] mb-6">What users Say About XeNo AI?</h2>
     </div>
@@ -1003,7 +1003,7 @@
 
 
 <!-- FAQ SECTION (ACCORDION) -->
-<section class="section-py px-10 section-gradient-bg border-t border-slate-50">
+<section class="py-10  md:py-0 md:section-py px-10 section-gradient-bg border-t border-slate-50">
     <div class="max-w-4xl mx-auto">
         <h2 class="font-['Plus_Jakarta_Sans'] font-bold text-[36px] leading-[55px] text-[rgb(15,23,42)] mb-16 text-center">
             FAQs about XeNo AI
@@ -1072,7 +1072,7 @@
 
 
 <!-- FINAL CTA SECTION (MIDNIGHT INDIGO) -->
-<section class="section-py px-10 bg-midnight text-white text-center">
+<section class="py-10  md:py-0 md:section-py px-10 bg-midnight text-white text-center">
     <div class="max-w-4xl mx-auto">
         <h2 class="text-[36px] font-black mb-10 leading-tight">Get Instant Clarity From Your Files</h2>
         <p class="text-slate-400 text-[20px] mb-14 font-medium">Join thousands of professionals building their private digital memory with XeNo.</p>
@@ -1105,7 +1105,7 @@
 
 
 <!-- MODERN FOOTER -->
-<footer class="bg-white border-t border-slate-100 py-24 px-10">
+<footer class="bg-white border-t border-slate-100 py-10 md:py-24 px-10">
     <div class="max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-16 text-left">
         <div class="col-span-2">
             <div class="flex items-center gap-2.5 group cursor-pointer mb-2">
