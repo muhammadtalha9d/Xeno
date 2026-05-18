@@ -254,7 +254,8 @@
                     <i data-lucide="book-open-check" size="20"></i>
                 </div>
                 <h4 class="font-serif text-[1.25rem] font-bold mb-3 leading-tight">Manual Document Reading</h4>
-                <p class="text-[0.9rem] text-ink-soft leading-relaxed mb-8">Ctrl+F gets a match, but doesn't explain the context. You end up reading 60 pages anyway.</p>
+                <p class="text-[0.9rem] text-ink-soft leading-relaxed mb-8">You scroll through pages looking for one detail.
+                    The answer is in there somewhere - you just can't find it.</p>
                 <div class="w-full bg-slate-50 rounded-2xl mt-auto flex items-center justify-center relative overflow-hidden border border-slate-100">
                     <img src="/v2/files-card5.png" alt="">
                 </div>
@@ -319,7 +320,7 @@
             <div onclick="switchTab('connect')" class="bg-white border border-slate-100 rounded-2xl p-6 text-left shadow-sm min-h-[180px] cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:border-brand-purple">
                 <div class="mx-auto md:mx-0 w-9 h-9 bg-indigo-50/50 rounded-lg flex items-center justify-center mb-5 text-brand-purple"><i data-lucide="link"></i></div>
                 <h4 class="font-sans text-[1.05rem] font-bold mb-2 text-ink">Context merging</h4>
-                <p class="text-[0.85rem] text-ink-soft leading-relaxed">Pull answers connecting dot between scattered files.</p>
+                <p class="text-[0.85rem] text-ink-soft leading-relaxed">Pull answers by connecting the dots across scattered files.</p>
             </div>
             <div onclick="switchTab('extract')" class="bg-white border border-slate-100 rounded-2xl p-6 text-left shadow-sm min-h-[180px] cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:border-brand-purple">
                 <div class="mx-auto md:mx-0 w-9 h-9 bg-indigo-50/50 rounded-lg flex items-center justify-center mb-5 text-brand-purple"><i data-lucide="image"></i></div>
@@ -370,7 +371,8 @@
             </div>
             <div class="flex flex-col md:flex-row gap-5 items-center md:items-start text-center md:text-left">
                 <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-brand-pink border border-white/10 shrink-0">✓</div>
-                <div><b class="block mb-1 text-white">Offline by Default</b><small class="text-white/60">XeNo works perfectly in airplane mode.</small></div>
+                <div><b class="block mb-1 text-white">Works Anywhere
+</b><small class="text-white/60">                    All intelligence runs on your device. No server, no delay.</small></div>
             </div>
         </div>
     </div>
@@ -576,7 +578,11 @@
         <p class="text-ink-soft  text-[18px] md:text-[20px] max-w-[800px] mx-auto mb-12 leading-relaxed">
             Join 10,000+ users who stop searching and start getting answers.<br> No cloud, no risk, just instant knowledge.
         </p>
-        <a href="#download" class="inline-flex items-center gap-2 bg-brand-gradient text-white font-bold px-9 py-[18px] rounded-xl text-[1.1rem] transition-all hover:-translate-y-0.5 shadow-[0_10px_20px_-5px_rgba(255,77,205,0.4)]">
+        <a
+                href="https://play.google.com/store/apps/details?id=filemanager.ai.personnel.assistant&hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 bg-brand-gradient text-white font-bold px-9 py-[18px] rounded-xl text-[1.1rem] transition-all hover:-translate-y-0.5 shadow-[0_10px_20px_-5px_rgba(255,77,205,0.4)]">
             Download XeNo Now <span>→</span>
         </a>
     </div>
@@ -620,22 +626,34 @@
         <div class="bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col gap-6 shadow-sm">
             <p class="text-[1rem] font-medium leading-relaxed text-ink-soft italic">"I have over 5,000 work PDFs. Searching for a specific clause used to take hours. XeNo does it in seconds without ever needing the cloud."</p>
             <div class="flex items-center gap-4 mt-auto">
-                <div class="w-12 h-12 rounded-full bg-brand-gradient border-2 border-white shadow-sm"></div>
-                <div class="text-[0.95rem] font-bold text-ink">Verified Professional</div>
+                <img
+                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
+                        alt="Sarah Jenkins"
+                        class="w-12 h-12 rounded-full border-2 border-white shadow-sm object-cover"
+                >
+                <div class="text-[0.95rem] font-bold text-ink">Sarah Jenkins</div>
             </div>
         </div>
         <div class="bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col gap-6 shadow-sm">
             <p class="text-[1rem] font-medium leading-relaxed text-ink-soft italic">"As a student, I have thousands of handwritten notes. XeNo's OCR finds specific symptoms across all my sketches."</p>
             <div class="flex items-center gap-4 mt-auto">
-                <div class="w-12 h-12 rounded-full bg-brand-gradient border-2 border-white shadow-sm"></div>
-                <div class="text-[0.95rem] font-bold text-ink">Verified Student</div>
+                <img
+                        src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
+                        alt="Alex Chen"
+                        class="w-12 h-12 rounded-full border-2 border-white shadow-sm object-cover"
+                >
+                <div class="text-[0.95rem] font-bold text-ink">Alex Chen</div>
             </div>
         </div>
         <div class="bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col gap-6 shadow-sm">
             <p class="text-[1rem] font-medium leading-relaxed text-ink-soft italic">"Finally, an AI that respects my privacy. I use it for tax prep locally without giving my data to servers."</p>
             <div class="flex items-center gap-4 mt-auto">
-                <div class="w-12 h-12 rounded-full bg-brand-gradient border-2 border-white shadow-sm"></div>
-                <div class="text-[0.95rem] font-bold text-ink">Verified User</div>
+                <img
+                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
+                        alt="Emily Rodriguez"
+                        class="w-12 h-12 rounded-full border-2 border-white shadow-sm object-cover"
+                >
+                <div class="text-[0.95rem] font-bold text-ink">Emily Rodriguez</div>
             </div>
         </div>
     </div>
@@ -680,7 +698,7 @@
                     Do I need an internet connection? <i data-lucide="chevron-down" class="text-brand-purple transition-transform"></i>
                 </button>
                 <div class="faq-content hidden px-8 pb-6 text-ink-soft text-base leading-relaxed">
-                    No. XeNo is built for offline use. Your files are indexed and queried entirely on-device without needing the cloud or a data connection.
+                    Only for the initial download and setup. After that, all search and processing happens on your device.
                 </div>
             </div>
         </div>
